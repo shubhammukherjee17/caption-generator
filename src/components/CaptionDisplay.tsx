@@ -6,7 +6,7 @@ import { Copy, Check, Hash, Heart, MessageCircle, Share, Bookmark } from 'lucide
 type InstagramContentType = 'post' | 'story' | 'reel';
 
 interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic';
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword';
   text: string;
   hashtags: string[];
   emojis: string;
@@ -32,7 +32,11 @@ const captionTypeInfo = {
   professional: { label: '💼 Professional', color: 'green', desc: 'Polished & informative' },
   trendy: { label: '🔥 Trendy', color: 'purple', desc: 'Current & viral-worthy' },
   aesthetic: { label: '🌸 Aesthetic', color: 'pink', desc: 'Dreamy & artistic' },
-  minimal: { label: '✨ Minimal', color: 'gray', desc: 'Clean & simple' }
+  minimal: { label: '✨ Minimal', color: 'gray', desc: 'Clean & simple' },
+  bold: { label: '👑 Bold', color: 'red', desc: 'Confident & powerful' },
+  poetic: { label: '🌙 Poetic', color: 'indigo', desc: 'Lyrical & artistic' },
+  oneline: { label: '📝 One Line', color: 'teal', desc: 'Single impactful sentence' },
+  oneword: { label: '💎 One Word', color: 'yellow', desc: 'Powerful single word' }
 };
 
 export default function CaptionDisplay({ result }: CaptionDisplayProps) {
@@ -68,14 +72,14 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
           Your Instagram {result.contentType.charAt(0).toUpperCase() + result.contentType.slice(1)} Captions
         </h2>
         <p className="text-gray-600">
-          AI analyzed your image and created 5 captions matching its exact mood & content
+          AI analyzed your image and created 9 captions matching its exact mood & content
         </p>
       </div>
 
       {/* Captions Grid */}
       <div className="grid lg:grid-cols-2 gap-6">
         {result.captions.map((caption, index) => {
-          const typeInfo = captionTypeInfo[caption.type];
+          const typeInfo = captionTypeInfo[caption.type] || { label: '📱 Custom', color: 'slate', desc: 'AI generated' };
           const captionId = `${caption.type}-${index}`;
           const fullCaption = `${caption.text}${caption.hashtags.length > 0 ? '\n\n' + caption.hashtags.map(tag => `#${tag}`).join(' ') : ''}`;
           const isCopied = copiedStates[captionId];

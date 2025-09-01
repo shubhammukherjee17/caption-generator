@@ -9,7 +9,7 @@ import ContentTypeSelector from '@/components/ContentTypeSelector';
 type InstagramContentType = 'post' | 'story' | 'reel';
 
 interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic';
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword';
   text: string;
   hashtags: string[];
   emojis: string;
@@ -85,7 +85,7 @@ export default function Home() {
       <footer className="bg-white border-t border-gray-100 mt-16">
         <div className="container mx-auto px-4 py-6">
           <div className="text-center text-gray-600 text-sm">
-            <p>Powered by Google Gemini AI • Built with Next.js and TypeScript</p>
+            <p>Powered by Google Gemini AI • Built with ❤️ by Shubham Mukherjee</p>
             <p className="mt-1">Create engaging Instagram content • Upload images responsibly</p>
           </div>
         </div>

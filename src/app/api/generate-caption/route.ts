@@ -8,7 +8,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 type InstagramContentType = 'post' | 'story' | 'reel';
 
 interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic';
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword';
   text: string;
   hashtags: string[];
   emojis: string;
@@ -32,13 +32,17 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
     case 'post':
       return `${basePrompt}
       
-      Create 5 Instagram POST captions that PERFECTLY match this specific image:
+      Create 9 Instagram POST captions that PERFECTLY match this specific image:
       
       1. CASUAL - Match the actual vibe (fun/sexy/cute/bold/etc.) with relatable, conversational tone
       2. PROFESSIONAL - Adapt to image content (brand/lifestyle/fitness/fashion) with polished language
       3. TRENDY - Use current slang that fits the image mood (fire/slay/aesthetic/vibe/etc.)
       4. AESTHETIC - Poetic, dreamy language that matches the visual style and mood
       5. MINIMAL - Short, impactful words that capture the essence
+      6. BOLD - Confident, powerful, attention-grabbing language that commands presence
+      7. POETIC - Beautiful, lyrical, artistic language with metaphors and imagery
+      8. ONELINE - Single impactful sentence that captures everything (10-25 words)
+      9. ONEWORD - Single powerful word that embodies the entire image mood
       
       IMPORTANT RULES:
       - If image shows attractive person/model -> use confident, bold, alluring language
@@ -225,52 +229,84 @@ export async function POST(request: NextRequest) {
 }
 
 function generateFallbackCaptions(contentType: InstagramContentType): InstagramCaption[] {
-  // More diverse and realistic fallback captions for different scenarios
-  const diverseCaptions = [
-    // Confidence/Hot/Sexy category
+  // Comprehensive fallback captions covering all 9 caption types
+  const expandedCaptions = [
+    // 1. Casual
     {
       type: 'casual' as const,
       text: "Feeling myself today 🔥 Who else is ready to slay?",
-      hashtags: ['confidence', 'selflove', 'hottie', 'mood', 'fire'],
+      hashtags: ['confidence', 'selflove', 'mood', 'vibes'],
       emojis: '🔥💋😘',
-      emojiOnly: '🔥💋😘😍👀💫👑'
+      emojiOnly: '🔥💋😘😍👀💫'
     },
-    // Aesthetic/Dreamy category  
-    {
-      type: 'aesthetic' as const,
-      text: "Lost in golden hour magic 🌅✨",
-      hashtags: ['goldenhour', 'aesthetic', 'dreamy', 'artsy', 'vibes'],
-      emojis: '🌅✨🌙',
-      emojiOnly: '🌅✨🌙💫🦋🌸🎨'
-    },
-    // Fitness/Strong category
+    // 2. Professional
     {
       type: 'professional' as const,
-      text: "Stronger every day 💪 Progress over perfection",
-      hashtags: ['fitness', 'motivation', 'strong', 'health', 'goals'],
-      emojis: '💪🏆⚡',
-      emojiOnly: '💪🏆⚡🔥🎨✨'
+      text: "Elevating my standards, one step at a time 💪✨",
+      hashtags: ['growth', 'professional', 'goals', 'success'],
+      emojis: '💪🏆✨',
+      emojiOnly: '💪🏆✨💼🔥'
     },
-    // Fashion/Style category
+    // 3. Trendy
     {
       type: 'trendy' as const,
-      text: "Serving looks and I know it 💅🔥",
-      hashtags: ['fashion', 'style', 'ootd', 'looks', 'trendy'],
-      emojis: '💅🔥👑',
-      emojiOnly: '💅🔥👑💋✨👠'
+      text: "This hits different 💯 No cap, pure vibes only!",
+      hashtags: ['trendy', 'viral', 'nocap', 'vibesonly'],
+      emojis: '💯🔥⚡',
+      emojiOnly: '💯🔥⚡😍👀'
     },
-    // Love/Romance category
+    // 4. Aesthetic
+    {
+      type: 'aesthetic' as const,
+      text: "Lost in golden hour dreams and ethereal moments 🌅✨",
+      hashtags: ['aesthetic', 'goldenhour', 'dreamy', 'ethereal'],
+      emojis: '🌅✨🌙',
+      emojiOnly: '🌅✨🌙💫🦋🌸'
+    },
+    // 5. Minimal
     {
       type: 'minimal' as const,
-      text: "Pure happiness 🥰",
-      hashtags: ['love', 'happiness', 'joy', 'heart', 'blessed'],
-      emojis: '🥰💖✨',
-      emojiOnly: '🥰💖✨💋💕🌸'
+      text: "Pure magic ✨",
+      hashtags: ['minimal', 'simple', 'clean'],
+      emojis: '✨🤍',
+      emojiOnly: '✨🤍'
+    },
+    // 6. Bold
+    {
+      type: 'bold' as const,
+      text: "I AM THE MOMENT. I AM THE ENERGY. Period. 👑🔥",
+      hashtags: ['bold', 'confident', 'powerful', 'energy'],
+      emojis: '👑🔥⚡',
+      emojiOnly: '👑🔥⚡💪💋💫'
+    },
+    // 7. Poetic
+    {
+      type: 'poetic' as const,
+      text: "Like stardust dancing through twilight skies, some moments are simply meant to be captured 🌙✨",
+      hashtags: ['poetic', 'artistic', 'lyrical', 'beauty'],
+      emojis: '🌙✨🌌',
+      emojiOnly: '🌙✨🌌🦋💫🌸'
+    },
+    // 8. One Line
+    {
+      type: 'oneline' as const,
+      text: "Sometimes the best moments happen when you're just being yourself 😊✨",
+      hashtags: ['authentic', 'genuine', 'moment', 'real'],
+      emojis: '😊✨💖',
+      emojiOnly: '😊✨💖🌸💫'
+    },
+    // 9. One Word
+    {
+      type: 'oneword' as const,
+      text: "Unstoppable.",
+      hashtags: ['oneword', 'power', 'strength'],
+      emojis: '💪',
+      emojiOnly: '💪🔥✨'
     }
   ];
   
   const fallbacks = {
-    post: diverseCaptions,
+    post: expandedCaptions,
     story: [
       {
         type: 'casual' as const,

@@ -1,19 +1,21 @@
-# Instagram Caption Generator 📸✨
+# Image Caption Generator 📸✨
 
-An AI-powered Instagram caption generator built with Next.js, TypeScript, and Google Gemini that creates engaging captions for your Instagram posts, stories, and reels. Get multiple caption styles with hashtags and emojis!
+A modern, AI-powered Instagram caption generator with a clean, professional interface inspired by QR Builders. Built with Next.js, TypeScript, and Google Gemini AI to create engaging captions for your Instagram posts, stories, and reels.
 
-## Features
+🌐 **Live Demo**: [Caption Generator](https://caption-generator-shubham.vercel.app/)
 
-🔥 **Real-Time Image Analysis** - AI analyzes your exact image content, mood, and style
-🎆 **Instagram-Focused** - Specialized captions for Posts, Stories, and Reels
-🎨 **5 Dynamic Caption Styles** - Adapts Casual, Professional, Trendy, Aesthetic, and Minimal to your image
-💋 **Context-Aware Captions** - Sexy/hot images get bold captions, aesthetic images get dreamy ones
-😍 **Smart Emoji Matching** - Emojis that actually relate to your image content
-🔍 **Category Detection** - Automatically detects: fashion, fitness, aesthetic, romantic, bold, etc.
-🚀 **Google Gemini Vision** - Advanced AI that truly "sees" and understands your images
-📋 **Copy-Ready Formats** - Both text+emoji captions and emoji-only versions
-📱 **Instagram Preview** - See exactly how captions look on Instagram
-🖱️ **Instant Upload** - Drag, drop, and get real-time analysis
+## ✨ Features
+
+🤖 **Advanced AI Vision** - Powered by Google Gemini 1.5 Flash for intelligent image analysis
+🎯 **Multiple Caption Styles** - 9 unique styles: Casual, Professional, Trendy, Minimal, Aesthetic, Bold, Poetic, One-line, and One-word
+📱 **Instagram-Optimized** - Specialized captions for Posts, Stories, and Reels
+🎨 **Clean Modern UI** - Professional white theme with subtle gradients and shadows
+📋 **Mobile-Friendly Copy** - Enhanced clipboard functionality that works on all devices
+🚀 **Real-time Generation** - Instant caption creation with smooth loading animations
+💎 **Smart Emoji Integration** - Context-aware emojis and emoji-only versions
+🔄 **Responsive Design** - Perfect experience on desktop, tablet, and mobile
+⚡ **Zero Setup Required** - No signups, no fees - just upload and generate!
+🎪 **Interactive Elements** - Smooth scrolling, hover effects, and polished transitions
 
 ## Tech Stack
 
@@ -29,8 +31,8 @@ An AI-powered Instagram caption generator built with Next.js, TypeScript, and Go
 ### 1. Clone and Install
 
 ```bash
-git clone <your-repo-url>
-cd image-caption-generator
+git clone https://github.com/shubhammukherjee17/caption-generator.git
+cd caption-generator
 npm install
 ```
 
@@ -62,10 +64,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 1. **Choose Content Type**: Select Post, Story, or Reel for optimized captions
 2. **Upload an Image**: Drag and drop or click to select from your device
-3. **Wait for AI Magic**: Gemini analyzes your image (usually 3-10 seconds)
-4. **Get 5 Caption Styles**: Casual, Professional, Trendy, Aesthetic, and Minimal
-5. **Copy Text or Emojis**: Choose text captions (with emojis) or emoji-only versions
-6. **Post to Instagram**: Paste directly to Instagram with hashtags included!
+3. **AI Processing**: Gemini analyzes your image content, mood, and context
+4. **Get 9 Caption Styles**: From casual to poetic, including one-word options
+5. **Mobile-Friendly Copy**: Enhanced clipboard that works on all devices
+6. **Ready to Post**: Paste directly to Instagram with hashtags and emojis!
 
 ### Supported Image Formats
 
@@ -77,6 +79,18 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 **File Size Limit**: 10MB per image
 
+## 🎨 UI Design
+
+The application features a modern, clean interface inspired by professional SaaS platforms:
+
+- **Clean White Theme**: Professional appearance with subtle gradients
+- **Card-Based Layout**: Organized content in elegant white cards with soft shadows
+- **Typography**: Inter font for modern, readable text hierarchy
+- **Interactive Elements**: Smooth hover effects, scaling animations, and transitions
+- **Mobile-First**: Responsive design that works perfectly on all screen sizes
+- **Accessibility**: Touch-friendly buttons and proper contrast ratios
+- **Loading States**: Beautiful loading animations and progress indicators
+
 ## How It Works
 
 ### Instagram Content Types
@@ -85,13 +99,17 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 **Stories** - Quick, casual overlay text (15-40 chars)
 **Reels** - Hook-driven, viral-worthy captions with CTAs (80-200 chars)
 
-### 5 Caption Styles
+### 9 Caption Styles
 
 😎 **Casual** - Fun, relatable, conversational with natural emojis
 💼 **Professional** - Polished, brand-friendly, informative with subtle emojis
 🔥 **Trendy** - Current slang, viral phrases, Gen-Z style with trendy emojis
 🌸 **Aesthetic** - Dreamy, poetic, artistic language with aesthetic emojis
 ✨ **Minimal** - Clean, simple, impactful with minimal emojis
+👑 **Bold** - Confident, powerful, attention-grabbing with strong emojis
+🌙 **Poetic** - Lyrical, artistic, metaphorical language with ethereal emojis
+📝 **One Line** - Single impactful sentence that captures the essence
+💎 **One Word** - Powerful single word that defines the moment
 
 ### Real-Time AI Analysis
 
@@ -115,14 +133,15 @@ The app uses **Google Gemini 1.5 Flash** with advanced vision to:
 src/
 ├── app/
 │   ├── api/generate-caption/
-│   │   └── route.ts          # API endpoint for caption generation
-│   ├── globals.css           # Global styles
-│   ├── layout.tsx           # Root layout
-│   └── page.tsx             # Main application page
+│   │   └── route.ts          # Google Gemini API integration
+│   ├── globals.css           # Global Tailwind CSS styles
+│   ├── layout.tsx           # Root layout with Inter font
+│   └── page.tsx             # Main application page with scrolling navigation
 ├── components/
-│   ├── ImageUploader.tsx    # Image upload component with drag-and-drop
-│   └── CaptionDisplay.tsx   # Caption results display component
-└── types/                   # TypeScript type definitions
+│   ├── ContentTypeSelector.tsx # Content type selection (Post/Story/Reel)
+│   ├── ImageUploader.tsx    # Drag-and-drop image upload with loading states
+│   └── CaptionDisplay.tsx   # Caption results with mobile-friendly copy
+└── types/                   # TypeScript interfaces and types
 ```
 
 ## Customization
@@ -151,8 +170,53 @@ const result = await hf.imageToText({
 });
 ```
 
-## Deploy on Vercel
+## 🚀 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Deploy on Vercel (Recommended)
 
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Connect Repository**: Import your GitHub repository on [Vercel](https://vercel.com/new)
+2. **Add Environment Variable**: Set `GEMINI_API_KEY` in project settings
+3. **Deploy**: Vercel will automatically build and deploy your app
+
+### Other Deployment Options
+
+- **Netlify**: Use the build command `npm run build`
+- **Railway**: Connect GitHub repo and deploy with auto-scaling
+- **Docker**: Use the included Dockerfile for containerized deployment
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Commit changes**: `git commit -m 'Add amazing feature'`
+4. **Push to branch**: `git push origin feature/amazing-feature`
+5. **Open a Pull Request**
+
+### Ideas for Contributions
+
+- 🎨 Additional UI themes or color schemes
+- 🔍 More caption styles (e.g., Funny, Motivational, Educational)
+- 🌍 Internationalization (i18n) support
+- 📊 Analytics and usage tracking
+- ⚡ Performance optimizations
+- 🧪 Testing improvements
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Credits
+
+- **AI Technology**: Google Gemini 1.5 Flash
+- **UI Inspiration**: QR Builders design philosophy
+- **Developer**: [Shubham Mukherjee](https://github.com/shubhammukherjee17)
+- **Icons**: Lucide React
+- **Framework**: Next.js team
+
+---
+
+⭐ **Star this repo** if you found it helpful!
+
+💬 **Questions?** Open an issue or reach out on GitHub.

@@ -36,7 +36,7 @@ const captionTypeInfo = {
   bold: { label: '👑 Bold', color: 'red', desc: 'Confident & powerful' },
   poetic: { label: '🌙 Poetic', color: 'indigo', desc: 'Lyrical & artistic' },
   oneline: { label: '📝 One Line', color: 'teal', desc: 'Single impactful sentence' },
-  oneword: { label: '💎 One Word', color: 'yellow', desc: 'Powerful single word' }
+  oneword: { label: '💎 One Word', color: 'orange', desc: 'Powerful single word' }
 };
 
 export default function CaptionDisplay({ result }: CaptionDisplayProps) {
@@ -65,14 +65,18 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-8 space-y-6">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+    <div className="w-full max-w-7xl mx-auto mt-12 space-y-8">
+      {/* Clean Header */}
+      <div className="text-center mb-12">
+        <div className="inline-flex items-center space-x-2 bg-green-50 border border-green-200 rounded-full px-6 py-3 mb-6">
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <span className="text-green-700 text-sm font-medium">AI Analysis Complete</span>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900 mb-3">
           Your Instagram {result.contentType.charAt(0).toUpperCase() + result.contentType.slice(1)} Captions
         </h2>
-        <p className="text-gray-600">
-          AI analyzed your image and created 9 captions matching its exact mood & content
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          AI analyzed your image and created 9 unique captions matching its exact mood & content
         </p>
       </div>
 
@@ -85,53 +89,53 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
           const isCopied = copiedStates[captionId];
           
           return (
-            <div key={captionId} className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              {/* Caption Header */}
-              <div className={`px-6 py-4 bg-gradient-to-r from-${typeInfo.color}-50 to-${typeInfo.color}-100 border-b border-gray-100`}>
+            <div key={captionId} className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:scale-[1.01] transition-all duration-300">
+              {/* Clean Caption Header */}
+              <div className={`px-6 py-5 bg-${typeInfo.color}-50 border-b border-gray-200`}>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-gray-800">{typeInfo.label}</h3>
-                    <p className="text-sm text-gray-600">{typeInfo.desc}</p>
+                    <h3 className="font-bold text-gray-900 text-lg">{typeInfo.label}</h3>
+                    <p className="text-gray-600 text-sm font-medium">{typeInfo.desc}</p>
                   </div>
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-3">
                     <button
                       onClick={() => copyToClipboard(caption.emojiOnly, `${captionId}-emoji`)}
-                      className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all ${
+                      className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-300 ${
                         copiedStates[`${captionId}-emoji`]
-                          ? 'bg-green-100 text-green-700' 
-                          : `bg-yellow-100 hover:bg-yellow-200 text-yellow-700`
+                          ? 'bg-green-100 text-green-700 shadow-sm' 
+                          : 'bg-gray-100 hover:bg-gray-200 text-gray-700 hover:shadow-sm'
                       }`}
                       title="Copy emoji-only version"
                     >
                       {copiedStates[`${captionId}-emoji`] ? (
                         <>
                           <Check className="w-4 h-4" />
-                          <span className="text-xs font-medium">✨</span>
+                          <span className="text-xs font-semibold">✨</span>
                         </>
                       ) : (
                         <>
                           <span className="text-sm">😍</span>
-                          <span className="text-xs font-medium">Emoji</span>
+                          <span className="text-xs font-semibold">Emoji</span>
                         </>
                       )}
                     </button>
                     <button
                       onClick={() => copyToClipboard(fullCaption, captionId)}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
                         isCopied 
-                          ? 'bg-green-100 text-green-700' 
-                          : `bg-${typeInfo.color}-100 hover:bg-${typeInfo.color}-200 text-${typeInfo.color}-700`
+                          ? 'bg-green-100 text-green-700 shadow-sm' 
+                          : `bg-${typeInfo.color}-100 hover:bg-${typeInfo.color}-200 text-${typeInfo.color}-700 hover:shadow-sm`
                       }`}
                     >
                       {isCopied ? (
                         <>
                           <Check className="w-4 h-4" />
-                          <span className="text-sm font-medium">Copied!</span>
+                          <span className="text-sm font-semibold">Copied!</span>
                         </>
                       ) : (
                         <>
                           <Copy className="w-4 h-4" />
-                          <span className="text-sm font-medium">Copy Text</span>
+                          <span className="text-sm font-semibold">Copy</span>
                         </>
                       )}
                     </button>
@@ -139,72 +143,72 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
                 </div>
               </div>
 
-              {/* Instagram Mock-up */}
+              {/* Clean Instagram Mock-up */}
               <div className="p-6">
                 {/* Instagram Post Preview */}
-                <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></div>
+                <div className="bg-gray-50 rounded-xl p-5 mb-4 border border-gray-200">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="w-9 h-9 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-sm"></div>
                     <div>
-                      <p className="font-semibold text-sm">your_account</p>
+                      <p className="font-bold text-sm text-gray-900">your_account</p>
                       <p className="text-xs text-gray-500">Just now</p>
                     </div>
                   </div>
                   
                   {/* Caption Text */}
-                  <div className="space-y-2">
-                    <p className="text-gray-800 leading-relaxed">
+                  <div className="space-y-3">
+                    <p className="text-gray-900 leading-relaxed font-medium">
                       {caption.text}
                     </p>
                     
                     {/* Emojis */}
                     {caption.emojis && (
-                      <div className="text-lg">
+                      <div className="text-xl">
                         {caption.emojis}
                       </div>
                     )}
                     
                     {/* Hashtags */}
                     {caption.hashtags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 pt-2">
+                      <div className="flex flex-wrap gap-2 pt-2">
                         {caption.hashtags.map((hashtag, idx) => (
-                          <span key={idx} className="text-blue-600 text-sm">#{hashtag}</span>
+                          <span key={idx} className="text-blue-600 text-sm font-medium hover:text-blue-700 transition-colors">#{hashtag}</span>
                         ))}
                       </div>
                     )}
                   </div>
                   
                   {/* Instagram Actions */}
-                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-200">
-                    <div className="flex items-center space-x-4">
-                      <Heart className="w-5 h-5 text-gray-400" />
-                      <MessageCircle className="w-5 h-5 text-gray-400" />
-                      <Share className="w-5 h-5 text-gray-400" />
+                  <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-200">
+                    <div className="flex items-center space-x-5">
+                      <Heart className="w-6 h-6 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" />
+                      <MessageCircle className="w-6 h-6 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer" />
+                      <Share className="w-6 h-6 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer" />
                     </div>
-                    <Bookmark className="w-5 h-5 text-gray-400" />
+                    <Bookmark className="w-6 h-6 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer" />
                   </div>
                 </div>
                 
-                {/* Emoji Only Display */}
+                {/* Clean Emoji Only Display */}
                 {caption.emojiOnly && (
-                  <div className="bg-yellow-50 rounded-lg p-3 mb-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-yellow-800">Emoji Only Version:</span>
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm font-semibold text-yellow-800">Emoji Only Version</span>
                       <button
                         onClick={() => copyToClipboard(caption.emojiOnly, `${captionId}-emoji-display`)}
-                        className="text-xs px-2 py-1 bg-yellow-200 hover:bg-yellow-300 rounded text-yellow-800"
+                        className="text-xs px-3 py-1 bg-yellow-100 hover:bg-yellow-200 rounded-lg text-yellow-800 font-medium transition-colors border border-yellow-300"
                       >
                         {copiedStates[`${captionId}-emoji-display`] ? '✓ Copied' : 'Copy'}
                       </button>
                     </div>
-                    <div className="text-2xl text-center py-2">
+                    <div className="text-3xl text-center py-3">
                       {caption.emojiOnly}
                     </div>
                   </div>
                 )}
                 
-                {/* Stats */}
-                <div className="flex justify-between text-sm text-gray-500">
+                {/* Clean Stats */}
+                <div className="flex justify-between text-sm text-gray-500 bg-gray-50 rounded-lg px-4 py-2 border border-gray-200">
                   <span>Caption: {caption.text.length} chars</span>
                   {caption.hashtags.length > 0 && (
                     <span className="flex items-center space-x-1">
@@ -219,13 +223,25 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
         })}
       </div>
       
-      {/* Image Info */}
-      <div className="bg-gray-50 rounded-lg p-4 mt-8">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Image Information</h3>
-        <div className="text-sm text-gray-600 space-y-1">
-          <p><span className="font-medium">File:</span> {result.imageInfo.name}</p>
-          <p><span className="font-medium">Size:</span> {formatFileSize(result.imageInfo.size)}</p>
-          <p><span className="font-medium">Type:</span> {result.imageInfo.type}</p>
+      {/* Clean Image Info */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-6 mt-8 shadow-sm">
+        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center space-x-2">
+          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+          <span>Image Information</span>
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+            <p className="text-gray-500 text-xs font-medium mb-1 uppercase tracking-wide">FILE NAME</p>
+            <p className="text-gray-900 font-semibold truncate">{result.imageInfo.name}</p>
+          </div>
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+            <p className="text-gray-500 text-xs font-medium mb-1 uppercase tracking-wide">FILE SIZE</p>
+            <p className="text-gray-900 font-semibold">{formatFileSize(result.imageInfo.size)}</p>
+          </div>
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+            <p className="text-gray-500 text-xs font-medium mb-1 uppercase tracking-wide">FILE TYPE</p>
+            <p className="text-gray-900 font-semibold uppercase">{result.imageInfo.type}</p>
+          </div>
         </div>
       </div>
     </div>

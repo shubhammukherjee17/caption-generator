@@ -40,24 +40,28 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-100">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-center space-x-3">
-            <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                <Instagram className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-gray-50">
+      {/* Clean Modern Header */}
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-6 py-12">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="flex items-center justify-center space-x-3 mb-6">
+              <div className="relative">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Instagram className="w-7 h-7 text-white" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-orange-400 to-pink-400 rounded-full flex items-center justify-center">
+                  <Sparkles className="w-2.5 h-2.5 text-white" />
+                </div>
               </div>
-              <Sparkles className="w-4 h-4 text-yellow-500 absolute -top-1 -right-1" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-800">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">
               Instagram Caption Generator
             </h1>
+            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+              AI analyzes your image and creates captions that match the exact mood, style & content
+            </p>
           </div>
-          <p className="text-center text-gray-600 mt-2">
-            AI analyzes your image and creates captions that match the exact mood, style & content
-          </p>
         </div>
       </header>
 
@@ -81,12 +85,27 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 mt-16">
-        <div className="container mx-auto px-4 py-6">
-          <div className="text-center text-gray-600 text-sm">
-            <p>Powered by Google Gemini AI • Built with ❤️ by Shubham Mukherjee</p>
-            <p className="mt-1">Create engaging Instagram content • Upload images responsibly</p>
+      {/* Clean Footer */}
+      <footer className="bg-white border-t border-gray-200 mt-16">
+        <div className="container mx-auto px-6 py-8">
+          <div className="text-center text-gray-600">
+            <p className="text-sm font-medium">Powered by Google Gemini AI • Built with Next.js and TypeScript</p>
+            <p className="mt-2 text-sm">Create engaging Instagram content • Upload images responsibly</p>
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <p className="text-xs">
+                Built with{' '}
+                <span className="text-red-500 text-sm">❤️</span>
+                {' '}by{' '}
+                <a 
+                  href="https://github.com/shubham-mukherjee" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200 hover:underline underline-offset-2"
+                >
+                  Shubham Mukherjee
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </footer>

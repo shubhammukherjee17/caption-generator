@@ -8,7 +8,7 @@ import { Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 type InstagramContentType = 'post' | 'story' | 'reel';
 
 interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic';
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword';
   text: string;
   hashtags: string[];
   emojis: string;
@@ -88,58 +88,86 @@ export default function ImageUploader({ onCaptionGenerated, contentType }: Image
   });
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto">
       <div
         {...getRootProps()}
         className={`
-          relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
-          transition-colors duration-200 min-h-[200px] flex flex-col items-center justify-center
-          ${isDragActive && !isDragReject ? 'border-blue-400 bg-blue-50' : ''}
-          ${isDragReject ? 'border-red-400 bg-red-50' : ''}
-          ${!isDragActive && !isDragReject ? 'border-gray-300 hover:border-gray-400 hover:bg-gray-50' : ''}
+          relative border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer
+          transition-all duration-300 min-h-[320px] flex flex-col items-center justify-center
+          bg-white shadow-sm
+          ${isDragActive && !isDragReject ? 'border-blue-500 bg-blue-50 scale-[1.02]' : ''}
+          ${isDragReject ? 'border-red-500 bg-red-50' : ''}
+          ${!isDragActive && !isDragReject ? 'border-gray-300 hover:border-gray-400 hover:shadow-lg hover:scale-[1.01]' : ''}
           ${isGenerating ? 'pointer-events-none opacity-75' : ''}
         `}
       >
         <input {...getInputProps()} />
         
         {isGenerating ? (
-          <div className="flex flex-col items-center space-y-4">
-            <Loader2 className="w-12 h-12 text-blue-500 animate-spin" />
-            <p className="text-lg text-gray-600">AI analyzing your image...</p>
-            <p className="text-sm text-gray-500">Creating captions that match the mood & content</p>
+          <div className="flex flex-col items-center space-y-6">
+            <div className="relative">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+                <Loader2 className="w-8 h-8 text-white animate-spin" />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-ping opacity-20"></div>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-gray-900 mb-2">AI analyzing your image...</p>
+              <p className="text-gray-600 font-medium">Creating 9 captions that match the exact mood & content</p>
+            </div>
           </div>
         ) : uploadedImage ? (
-          <div className="flex flex-col items-center space-y-4">
-            <Image
-              src={uploadedImage}
-              alt="Uploaded preview"
-              width={300}
-              height={192}
-              className="max-w-full max-h-48 object-contain rounded-lg shadow-md"
-            />
-            <p className="text-sm text-gray-500">
-              {contentType === 'post' ? 'Instagram Post' : 
-               contentType === 'story' ? 'Instagram Story' : 
-               'Instagram Reel'} captions generated! Upload another image to try again.
-            </p>
+          <div className="flex flex-col items-center space-y-6">
+            <div className="relative group">
+              <Image
+                src={uploadedImage}
+                alt="Uploaded preview"
+                width={350}
+                height={220}
+                className="max-w-full max-h-56 object-contain rounded-xl shadow-lg border border-gray-200 group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="text-center bg-green-50 border border-green-200 rounded-xl p-4">
+              <p className="text-green-800 font-semibold mb-1">
+                ✅ {contentType === 'post' ? 'Instagram Post' : 
+                 contentType === 'story' ? 'Instagram Story' : 
+                 'Instagram Reel'} captions generated!
+              </p>
+              <p className="text-green-700 text-sm">Upload another image to try again</p>
+            </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center space-y-4">
+          <div className="flex flex-col items-center space-y-6">
             {isDragActive ? (
               <>
-                <Upload className="w-12 h-12 text-blue-500" />
-                <p className="text-lg text-blue-600">Drop the image here!</p>
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center animate-bounce shadow-lg">
+                    <Upload className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full animate-ping opacity-20"></div>
+                </div>
+                <p className="text-2xl font-bold text-blue-600">Drop the image here!</p>
               </>
             ) : (
               <>
-                <ImageIcon className="w-12 h-12 text-gray-400" />
-                <div className="space-y-2">
-                  <p className="text-lg text-gray-600">
-                    Drag & drop an image here, or click to select
+                <div className="w-16 h-16 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center mb-2 group-hover:from-blue-500 group-hover:to-purple-600 group-hover:scale-110 transition-all duration-300">
+                  <ImageIcon className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-center space-y-4">
+                  <p className="text-2xl font-bold text-gray-900">
+                    Drag & drop an image here
                   </p>
-                  <p className="text-sm text-gray-400">
-                    Supports JPG, PNG, GIF, WebP (max 10MB)
+                  <p className="text-gray-600 text-lg">
+                    or click to select from your device
                   </p>
+                  <div className="flex items-center justify-center space-x-4 mt-6">
+                    <div className="bg-gray-100 rounded-full px-4 py-2 border border-gray-200">
+                      <p className="text-gray-700 text-sm font-medium">JPG, PNG, GIF, WebP</p>
+                    </div>
+                    <div className="bg-gray-100 rounded-full px-4 py-2 border border-gray-200">
+                      <p className="text-gray-700 text-sm font-medium">Max 10MB</p>
+                    </div>
+                  </div>
                 </div>
               </>
             )}
@@ -148,8 +176,8 @@ export default function ImageUploader({ onCaptionGenerated, contentType }: Image
       </div>
 
       {error && (
-        <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-red-600 text-sm">{error}</p>
+        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+          <p className="text-red-600 text-sm font-medium text-center">{error}</p>
         </div>
       )}
     </div>

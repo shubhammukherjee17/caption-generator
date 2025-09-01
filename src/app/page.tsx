@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Instagram, Sparkles } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 import ImageUploader from '@/components/ImageUploader';
 import CaptionDisplay from '@/components/CaptionDisplay';
 import ContentTypeSelector from '@/components/ContentTypeSelector';

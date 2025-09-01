@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check, Hash, Heart, MessageCircle, Share, Bookmark, Instagram } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 
 type InstagramContentType = 'post' | 'story' | 'reel';
 

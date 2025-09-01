@@ -268,13 +268,15 @@ export async function POST(request: NextRequest) {
         console.log('✅ Using fallback captions');
       }
       
-    } catch (geminiError: any) {
+    } catch (geminiError: unknown) {
       console.error('❌ Gemini API error:', geminiError);
-      console.error('Error details:', {
-        message: geminiError?.message,
-        status: geminiError?.status,
-        code: geminiError?.code
-      });
+      
+      const errorDetails = {
+        message: geminiError instanceof Error ? geminiError.message : 'Unknown error',
+        status: (geminiError as Record<string, unknown>)?.status || 'Unknown',
+        code: (geminiError as Record<string, unknown>)?.code || 'Unknown'
+      };
+      console.error('Error details:', errorDetails);
       
       // Generate fallback captions
       captions = generateFallbackCaptions(contentType);
@@ -293,12 +295,14 @@ export async function POST(request: NextRequest) {
       }
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('🚫 Caption generation error:', error);
-    console.error('Error details:', {
-      message: error?.message,
-      stack: error?.stack?.substring(0, 500)
-    });
+    
+    const errorDetails = {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack?.substring(0, 500) : 'No stack trace'
+    };
+    console.error('Error details:', errorDetails);
     
     // Always return fallback captions instead of an error
     const fallbackCaptions = generateFallbackCaptions('post');

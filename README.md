@@ -4,15 +4,16 @@ An AI-powered Instagram caption generator built with Next.js, TypeScript, and Go
 
 ## Features
 
+🔥 **Real-Time Image Analysis** - AI analyzes your exact image content, mood, and style
 🎆 **Instagram-Focused** - Specialized captions for Posts, Stories, and Reels
-🎨 **5 Caption Styles** - Casual, Professional, Trendy, Aesthetic, and Minimal options
-🌸 **Aesthetic Captions** - Dreamy, poetic, artistic captions for creative content
-😍 **Emoji Integration** - Emojis naturally woven into text + separate emoji-only versions
-🔍 **Smart Hashtags** - AI-generated relevant hashtags for better reach
-🚀 **Google Gemini AI** - Advanced vision AI for contextual understanding
-📋 **Copy-Ready** - One-click copying with proper formatting
-📱 **Instagram Preview** - See how your captions look on Instagram
-🖱️ **Drag & Drop** - Easy image upload with visual feedback
+🎨 **5 Dynamic Caption Styles** - Adapts Casual, Professional, Trendy, Aesthetic, and Minimal to your image
+💋 **Context-Aware Captions** - Sexy/hot images get bold captions, aesthetic images get dreamy ones
+😍 **Smart Emoji Matching** - Emojis that actually relate to your image content
+🔍 **Category Detection** - Automatically detects: fashion, fitness, aesthetic, romantic, bold, etc.
+🚀 **Google Gemini Vision** - Advanced AI that truly "sees" and understands your images
+📋 **Copy-Ready Formats** - Both text+emoji captions and emoji-only versions
+📱 **Instagram Preview** - See exactly how captions look on Instagram
+🖱️ **Instant Upload** - Drag, drop, and get real-time analysis
 
 ## Tech Stack
 
@@ -92,16 +93,21 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 🌸 **Aesthetic** - Dreamy, poetic, artistic language with aesthetic emojis
 ✨ **Minimal** - Clean, simple, impactful with minimal emojis
 
-### AI Caption Generation
+### Real-Time AI Analysis
 
-The app uses **Google Gemini 1.5 Flash** with vision capabilities to:
+The app uses **Google Gemini 1.5 Flash** with advanced vision to:
 
-1. **Analyze Image Content** - Understands objects, scenes, emotions, and context
-2. **Generate 5 Style Variations** - Creates diverse caption approaches for each image
-3. **Natural Emoji Integration** - Weaves emojis seamlessly into text captions
-4. **Emoji-Only Versions** - Provides separate emoji-only captions for versatility
-5. **Smart Hashtag Suggestions** - Relevant, trending hashtags for better reach
-6. **Platform Optimization** - Tailored for each Instagram content type
+1. **Deep Image Analysis** - Identifies subjects, mood, lighting, colors, and emotions
+2. **Context Detection** - Recognizes: sexy/hot, aesthetic, fitness, fashion, romance, boldness, etc.
+3. **Style Adaptation** - All 5 caption styles adapt to match your specific image vibe
+4. **Smart Emoji Selection** - Chooses emojis that directly relate to image content
+5. **Category-Specific Language** - Uses appropriate language for each detected category:
+   - **Confident/Sexy**: Bold, alluring, fire language (🔥💋😘)
+   - **Aesthetic**: Dreamy, poetic, artistic language (🌸✨🌙)
+   - **Fitness**: Motivational, strong, empowering language (💪🏆⚡)
+   - **Fashion**: Trendy, stylish, chic language (💅👑👠)
+   - **Romantic**: Love, sweet, heartfelt language (💖🌹🥰)
+6. **Energy Matching** - High-energy images get exciting captions, calm images get peaceful ones
 
 ## Project Structure
 

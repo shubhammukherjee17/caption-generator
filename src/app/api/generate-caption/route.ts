@@ -16,94 +16,119 @@ interface InstagramCaption {
 }
 
 function generateInstagramPrompt(contentType: InstagramContentType): string {
-  const basePrompt = `Analyze this image and generate Instagram captions. Focus on what's actually visible in the image.`;
+  const basePrompt = `CRITICAL: Analyze this image DEEPLY and generate Instagram captions based on what you ACTUALLY SEE. 
+  
+  First, identify:
+  - Main subject/content (person, object, scene, etc.)
+  - Mood/vibe (aesthetic, sexy/hot, cute, bold, romantic, cool, artsy, etc.)
+  - Colors, lighting, composition
+  - Setting/location
+  - Any emotions or feelings conveyed
+  - Style (glamorous, casual, artistic, fitness, fashion, etc.)
+  
+  Then adapt ALL captions to match the SPECIFIC content, mood, and energy of THIS image.`;
   
   switch (contentType) {
     case 'post':
-      return `${basePrompt} Create 5 different Instagram POST captions:
-      1. CASUAL - Fun, relatable, conversational tone with emojis
-      2. PROFESSIONAL - Polished, brand-friendly, informative with subtle emojis
-      3. TRENDY - Using current slang, trending phrases, Gen-Z style with trendy emojis
-      4. AESTHETIC - Poetic, artistic, dreamy language with aesthetic emojis
-      5. MINIMAL - Short, clean, impactful with minimal emojis
+      return `${basePrompt}
       
-      For each caption:
-      - Make it engaging and authentic
-      - Include relevant emojis naturally integrated in the text
-      - Suggest 5-8 relevant hashtags
-      - Keep captions between 50-150 characters
-      - Make it specific to what's in the image
-      - Create a separate emoji-only version for each caption
+      Create 5 Instagram POST captions that PERFECTLY match this specific image:
+      
+      1. CASUAL - Match the actual vibe (fun/sexy/cute/bold/etc.) with relatable, conversational tone
+      2. PROFESSIONAL - Adapt to image content (brand/lifestyle/fitness/fashion) with polished language
+      3. TRENDY - Use current slang that fits the image mood (fire/slay/aesthetic/vibe/etc.)
+      4. AESTHETIC - Poetic, dreamy language that matches the visual style and mood
+      5. MINIMAL - Short, impactful words that capture the essence
+      
+      IMPORTANT RULES:
+      - If image shows attractive person/model -> use confident, bold, alluring language
+      - If image is artistic/aesthetic -> use dreamy, poetic, creative language
+      - If image shows fitness/body -> use motivational, strong, empowering language
+      - If image is romantic/couple -> use love, relationship, romantic language
+      - If image is fashion/style -> use trendy, stylish, fashion-forward language
+      - If image is nature/travel -> use adventure, wanderlust, peaceful language
+      - Match the ENERGY: high-energy images need exciting captions, calm images need peaceful captions
+      
+      For emojis:
+      - Use emojis that DIRECTLY relate to what's in the image
+      - Match the mood: 🔥💋😘 for hot/sexy, 🌸✨💫 for aesthetic, 💪🏆⚡ for fitness, etc.
+      - Create emoji-only versions that tell the image story through emojis alone
+      
+      Hashtags:
+      - Use hashtags that match the actual image content and mood
+      - Include trending tags for the specific niche/category shown
       
       Return in JSON format:
       {
         "captions": [
           {
             "type": "casual",
-            "text": "caption text with emojis naturally included",
-            "hashtags": ["hashtag1", "hashtag2"...],
-            "emojis": "🎨✨📸",
-            "emojiOnly": "📸✨🎨😍🔥"
+            "text": "caption matching actual image mood with relevant emojis",
+            "hashtags": ["relevant", "to", "actual", "image", "content"],
+            "emojis": "🔥💋✨",
+            "emojiOnly": "🔥💋✨😍👀💫"
           }
         ]
       }`;
       
     case 'story':
-      return `${basePrompt} Create 5 different Instagram STORY captions:
-      1. CASUAL - Short, spontaneous, authentic with emojis
-      2. PROFESSIONAL - Brief but polished with subtle emojis
-      3. TRENDY - Current vibes, relatable with trendy emojis
-      4. AESTHETIC - Dreamy, artistic, poetic with aesthetic emojis
-      5. MINIMAL - Very short, clean with minimal emojis
+      return `${basePrompt}
       
-      For each caption:
-      - Keep it SHORT (15-40 characters)
-      - Perfect for story overlay text
-      - Include 2-4 relevant emojis naturally in text
-      - Focus on the moment/feeling
-      - Make it specific to what's in the image
-      - Create a separate emoji-only version
+      Create 5 Instagram STORY captions that capture the EXACT mood of this image:
+      
+      1. CASUAL - Match the vibe: if sexy use "Feeling myself 🔥", if cute use "Soft vibes ✨", etc.
+      2. PROFESSIONAL - Brief but match the content (fitness/work/lifestyle/etc.)
+      3. TRENDY - Use phrases that match: "That's hot 🥵" for sexy, "Aesthetic af ✨" for artistic
+      4. AESTHETIC - Dreamy words matching the visual: "Golden hour magic" for sunset, "Midnight mood" for dark
+      5. MINIMAL - 1-3 words that capture essence: "Unstoppable" for confident, "Dreaming" for soft
+      
+      STORY RULES:
+      - Keep SHORT (10-30 characters)
+      - Match the IMAGE ENERGY exactly
+      - Use emojis that represent what's actually shown
+      - Perfect for overlay text on the actual image
       
       Return in JSON format:
       {
         "captions": [
           {
             "type": "casual",
-            "text": "short story text with emojis",
+            "text": "text matching image mood",
             "hashtags": [],
-            "emojis": "🎨✨",
-            "emojiOnly": "😍✨📸🔥"
+            "emojis": "relevant emojis",
+            "emojiOnly": "story of image in emojis"
           }
         ]
       }`;
       
     case 'reel':
-      return `${basePrompt} Create 5 different Instagram REEL captions:
-      1. CASUAL - Hook + engaging question or statement with emojis
-      2. PROFESSIONAL - Value-driven, educational hook with professional emojis
-      3. TRENDY - Viral-worthy, shareable content with trendy emojis
-      4. AESTHETIC - Artistic, dreamy hook with aesthetic emojis
-      5. MINIMAL - Clean, impactful hook with minimal emojis
+      return `${basePrompt}
       
-      For each caption:
-      - Start with a STRONG hook
-      - Include call-to-action
-      - Use trending hashtags
-      - 80-200 characters optimal
-      - Encourage engagement
-      - Include emojis naturally in text
-      - Make it specific to what's in the image
-      - Create a separate emoji-only version
+      Create 5 Instagram REEL captions with STRONG hooks matching this specific image:
+      
+      1. CASUAL - Hook matching image: "Wait till you see this 👀" for reveals, "This confidence though 🔥" for bold poses
+      2. PROFESSIONAL - Educational/value hook: "Here's how to get this look" for beauty, "The secret to this pose" for fitness
+      3. TRENDY - Viral hooks: "POV: You look like this 🔥" for attractive, "Tell me you're iconic without telling me" for confident
+      4. AESTHETIC - Artistic hooks: "When the light hits different ✨" for golden hour, "Ethereal energy 🌙" for dreamy
+      5. MINIMAL - Powerful short hooks: "Main character energy" for confident, "Art" for aesthetic
+      
+      REEL RULES:
+      - Hook must match the IMAGE VIBE exactly
+      - If sexy/hot -> use confident, bold, fire language
+      - If aesthetic -> use dreamy, magical, artistic language
+      - If fitness -> use motivational, strong language
+      - Include engagement: "Double tap if...", "Save this if...", "Tag someone who..."
+      - Use hashtags matching actual image category
       
       Return in JSON format:
       {
         "captions": [
           {
             "type": "casual",
-            "text": "hook + caption with emojis included",
-            "hashtags": ["hashtag1", "hashtag2"...],
-            "emojis": "🎨✨📸",
-            "emojiOnly": "🔥👀✨📸😍"
+            "text": "hook matching actual image vibe + call to action",
+            "hashtags": ["matching", "image", "category"],
+            "emojis": "emojis representing image content",
+            "emojiOnly": "emoji story of the image"
           }
         ]
       }`;
@@ -200,116 +225,124 @@ export async function POST(request: NextRequest) {
 }
 
 function generateFallbackCaptions(contentType: InstagramContentType): InstagramCaption[] {
+  // More diverse and realistic fallback captions for different scenarios
+  const diverseCaptions = [
+    // Confidence/Hot/Sexy category
+    {
+      type: 'casual' as const,
+      text: "Feeling myself today 🔥 Who else is ready to slay?",
+      hashtags: ['confidence', 'selflove', 'hottie', 'mood', 'fire'],
+      emojis: '🔥💋😘',
+      emojiOnly: '🔥💋😘😍👀💫👑'
+    },
+    // Aesthetic/Dreamy category  
+    {
+      type: 'aesthetic' as const,
+      text: "Lost in golden hour magic 🌅✨",
+      hashtags: ['goldenhour', 'aesthetic', 'dreamy', 'artsy', 'vibes'],
+      emojis: '🌅✨🌙',
+      emojiOnly: '🌅✨🌙💫🦋🌸🎨'
+    },
+    // Fitness/Strong category
+    {
+      type: 'professional' as const,
+      text: "Stronger every day 💪 Progress over perfection",
+      hashtags: ['fitness', 'motivation', 'strong', 'health', 'goals'],
+      emojis: '💪🏆⚡',
+      emojiOnly: '💪🏆⚡🔥🎨✨'
+    },
+    // Fashion/Style category
+    {
+      type: 'trendy' as const,
+      text: "Serving looks and I know it 💅🔥",
+      hashtags: ['fashion', 'style', 'ootd', 'looks', 'trendy'],
+      emojis: '💅🔥👑',
+      emojiOnly: '💅🔥👑💋✨👠'
+    },
+    // Love/Romance category
+    {
+      type: 'minimal' as const,
+      text: "Pure happiness 🥰",
+      hashtags: ['love', 'happiness', 'joy', 'heart', 'blessed'],
+      emojis: '🥰💖✨',
+      emojiOnly: '🥰💖✨💋💕🌸'
+    }
+  ];
+  
   const fallbacks = {
-    post: [
-      {
-        type: 'casual' as const,
-        text: "Just captured this moment ✨ What do you think?",
-        hashtags: ['photography', 'moment', 'vibes', 'instagram'],
-        emojis: '📸✨🎨',
-        emojiOnly: '📸✨🎨😍💫🔥'
-      },
-      {
-        type: 'professional' as const,
-        text: "Sharing this beautiful capture with you today 📸",
-        hashtags: ['content', 'creative', 'inspiration', 'art'],
-        emojis: '🎯📱💡',
-        emojiOnly: '📸🎯💼✨📱'
-      },
-      {
-        type: 'trendy' as const,
-        text: "This hits different 💯 Send this to someone who needs to see it!",
-        hashtags: ['mood', 'aesthetic', 'viral', 'trending'],
-        emojis: '🔥💯⚡',
-        emojiOnly: '🔥💯⚡😍👀💫'
-      },
-      {
-        type: 'aesthetic' as const,
-        text: "Lost in the beauty of this moment 🌸✨",
-        hashtags: ['aesthetic', 'dreamy', 'artistic', 'beauty', 'moments'],
-        emojis: '🌸✨🤍',
-        emojiOnly: '🌸✨🤍💫🦋🌙'
-      },
-      {
-        type: 'minimal' as const,
-        text: "Simply beautiful.",
-        hashtags: ['minimal', 'clean', 'aesthetic'],
-        emojis: '✨🤍',
-        emojiOnly: '✨🤍'
-      }
-    ],
+    post: diverseCaptions,
     story: [
       {
         type: 'casual' as const,
-        text: "Mood rn ✨",
+        text: "Feeling myself 🔥",
         hashtags: [],
-        emojis: '✨😍',
-        emojiOnly: '✨😍🔥📸'
+        emojis: '🔥😘',
+        emojiOnly: '🔥😘💋😍'
       },
       {
         type: 'professional' as const,
-        text: "Today's capture 📸",
+        text: "Confidence level 💯",
         hashtags: [],
-        emojis: '📸💼',
-        emojiOnly: '📸💼✨'
+        emojis: '💯💪',
+        emojiOnly: '💯💪🏆✨'
       },
       {
         type: 'trendy' as const,
-        text: "No caption needed 💯",
+        text: "That's hot 🥵",
         hashtags: [],
-        emojis: '💯🔥',
-        emojiOnly: '💯🔥✨👀'
+        emojis: '🥵🔥',
+        emojiOnly: '🥵🔥👀💋'
       },
       {
         type: 'aesthetic' as const,
-        text: "Dreamy vibes 🌙",
+        text: "Golden hour magic ✨",
         hashtags: [],
-        emojis: '🌙✨',
-        emojiOnly: '🌙✨🦋💫🌸'
+        emojis: '✨🌅',
+        emojiOnly: '✨🌅🌙💫🦋'
       },
       {
         type: 'minimal' as const,
-        text: "✨",
+        text: "Vibes ✨",
         hashtags: [],
-        emojis: '✨',
-        emojiOnly: '✨'
+        emojis: '✨😍',
+        emojiOnly: '✨😍'
       }
     ],
     reel: [
       {
         type: 'casual' as const,
-        text: "Wait for it... 👀 This moment was everything!",
-        hashtags: ['reels', 'viral', 'moment', 'content'],
-        emojis: '👀🔥✨',
-        emojiOnly: '👀🔥✨📸😍💫'
+        text: "Wait... did I just serve this look? 🔥👀 Double tap if you agree!",
+        hashtags: ['confidence', 'fire', 'viral', 'mood'],
+        emojis: '🔥👀💋',
+        emojiOnly: '🔥👀💋😘💯✨'
       },
       {
         type: 'professional' as const,
-        text: "Here's what I learned today 📚 Save this for later!",
-        hashtags: ['education', 'tips', 'content', 'value'],
-        emojis: '💡🎯📚',
-        emojiOnly: '💡🎯📚✨💼'
+        text: "Confidence is the best outfit 💪 Wear it daily!",
+        hashtags: ['confidence', 'motivation', 'selfcare', 'strong'],
+        emojis: '💪🏆✨',
+        emojiOnly: '💪🏆✨👑🔥'
       },
       {
         type: 'trendy' as const,
-        text: "POV: You see this and immediately hit save 💯",
-        hashtags: ['pov', 'relatable', 'viral', 'mood'],
-        emojis: '💯🎭⚡',
-        emojiOnly: '💯🎭⚡🔥👀✨'
+        text: "POV: You're main character energy 👑🔥 Tag someone iconic!",
+        hashtags: ['maincharacter', 'iconic', 'energy', 'pov'],
+        emojis: '👑🔥💯',
+        emojiOnly: '👑🔥💯👀💋✨'
       },
       {
         type: 'aesthetic' as const,
-        text: "Poetry in motion 🌙✨",
-        hashtags: ['aesthetic', 'art', 'dreamy', 'poetry'],
-        emojis: '🌙✨🎨',
-        emojiOnly: '🌙✨🎨🦋💫🌸'
+        text: "When the light hits just right... pure magic ✨🌙",
+        hashtags: ['aesthetic', 'dreamy', 'magic', 'artsy'],
+        emojis: '✨🌙💫',
+        emojiOnly: '✨🌙💫🦋🌸🎨'
       },
       {
         type: 'minimal' as const,
-        text: "Art in motion.",
-        hashtags: ['art', 'aesthetic', 'reels'],
-        emojis: '🎨🎬',
-        emojiOnly: '🎨🎬✨'
+        text: "Unstoppable.",
+        hashtags: ['power', 'strength', 'minimal'],
+        emojis: '💪✨',
+        emojiOnly: '💪✨🔥'
       }
     ]
   };

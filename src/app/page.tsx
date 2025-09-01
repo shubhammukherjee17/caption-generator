@@ -56,7 +56,7 @@ export default function Home() {
             </h1>
           </div>
           <p className="text-center text-gray-600 mt-2">
-            AI-powered captions for your Instagram posts, stories, and reels
+            AI analyzes your image and creates captions that match the exact mood, style & content
           </p>
         </div>
       </header>

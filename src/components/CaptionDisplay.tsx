@@ -68,7 +68,7 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
           Your Instagram {result.contentType.charAt(0).toUpperCase() + result.contentType.slice(1)} Captions
         </h2>
         <p className="text-gray-600">
-          Choose from 5 different styles - click to copy any caption or emoji version
+          AI analyzed your image and created 5 captions matching its exact mood & content
         </p>
       </div>
 

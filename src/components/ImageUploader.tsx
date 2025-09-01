@@ -105,7 +105,8 @@ export default function ImageUploader({ onCaptionGenerated, contentType }: Image
         {isGenerating ? (
           <div className="flex flex-col items-center space-y-4">
             <Loader2 className="w-12 h-12 text-blue-500 animate-spin" />
-            <p className="text-lg text-gray-600">Generating captions...</p>
+            <p className="text-lg text-gray-600">AI analyzing your image...</p>
+            <p className="text-sm text-gray-500">Creating captions that match the mood & content</p>
           </div>
         ) : uploadedImage ? (
           <div className="flex flex-col items-center space-y-4">

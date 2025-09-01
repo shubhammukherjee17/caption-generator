@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Instagram Caption Generator 📸✨
 
-## Getting Started
+An AI-powered Instagram caption generator built with Next.js, TypeScript, and Google Gemini that creates engaging captions for your Instagram posts, stories, and reels. Get multiple caption styles with hashtags and emojis!
 
-First, run the development server:
+## Features
+
+🎆 **Instagram-Focused** - Specialized captions for Posts, Stories, and Reels
+🎨 **4 Caption Styles** - Casual, Professional, Trendy, and Minimal options
+🔍 **Smart Hashtags** - AI-generated relevant hashtags for better reach
+🚀 **Google Gemini AI** - Advanced vision AI for contextual understanding
+📋 **Copy-Ready** - One-click copying with proper formatting
+📱 **Instagram Preview** - See how your captions look on Instagram
+🖱️ **Drag & Drop** - Easy image upload with visual feedback
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, React 18, TypeScript
+- **Styling**: Tailwind CSS
+- **AI/ML**: Google Gemini 1.5 Flash (Vision)
+- **Image Processing**: Sharp
+- **UI Components**: Lucide React icons
+- **File Upload**: React Dropzone
+
+## Setup Instructions
+
+### 1. Clone and Install
+
+```bash
+git clone <your-repo-url>
+cd image-caption-generator
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+To get a Google Gemini API key (FREE):
+1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Sign in with your Google account
+3. Click "Create API Key"
+4. Copy the generated key to your `.env.local` file
+
+**Note**: Gemini has a generous free tier perfect for this app!
+
+### 3. Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Choose Content Type**: Select Post, Story, or Reel for optimized captions
+2. **Upload an Image**: Drag and drop or click to select from your device
+3. **Wait for AI Magic**: Gemini analyzes your image (usually 3-10 seconds)
+4. **Get 4 Caption Styles**: Choose from Casual, Professional, Trendy, or Minimal
+5. **Copy & Post**: Click any caption to copy with hashtags included!
 
-## Learn More
+### Supported Image Formats
 
-To learn more about Next.js, take a look at the following resources:
+- JPEG (.jpg, .jpeg)
+- PNG (.png)
+- GIF (.gif)
+- WebP (.webp)
+- BMP (.bmp)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**File Size Limit**: 10MB per image
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How It Works
+
+### Instagram Content Types
+
+**Posts** - Engaging feed content with hashtags (50-150 chars)
+**Stories** - Quick, casual overlay text (20-50 chars)
+**Reels** - Hook-driven, viral-worthy captions with CTAs
+
+### AI Caption Generation
+
+The app uses **Google Gemini 1.5 Flash** with vision capabilities to:
+
+1. **Analyze Image Content** - Understands objects, scenes, emotions, and context
+2. **Generate Multiple Styles** - Creates 4 different caption approaches
+3. **Add Smart Hashtags** - Suggests relevant, trending hashtags
+4. **Include Emojis** - Naturally integrates emojis for engagement
+5. **Optimize for Platform** - Tailored for each Instagram content type
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── api/generate-caption/
+│   │   └── route.ts          # API endpoint for caption generation
+│   ├── globals.css           # Global styles
+│   ├── layout.tsx           # Root layout
+│   └── page.tsx             # Main application page
+├── components/
+│   ├── ImageUploader.tsx    # Image upload component with drag-and-drop
+│   └── CaptionDisplay.tsx   # Caption results display component
+└── types/                   # TypeScript type definitions
+```
+
+## Customization
+
+### Adding More Emojis
+
+Edit the `emojiMap` object in `src/app/api/generate-caption/route.ts` to add more word-to-emoji mappings:
+
+```typescript
+const emojiMap: Record<string, string> = {
+  // Add your custom mappings
+  'mountain': '🏔️',
+  'beach': '🏖️',
+  // ... existing mappings
+};
+```
+
+### Using Different AI Models
+
+You can replace the BLIP model with other Hugging Face models:
+
+```typescript
+const result = await hf.imageToText({
+  data: processedImage,
+  model: 'nlpconnect/vit-gpt2-image-captioning' // Alternative model
+});
+```
 
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

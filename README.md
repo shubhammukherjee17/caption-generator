@@ -5,7 +5,9 @@ An AI-powered Instagram caption generator built with Next.js, TypeScript, and Go
 ## Features
 
 🎆 **Instagram-Focused** - Specialized captions for Posts, Stories, and Reels
-🎨 **4 Caption Styles** - Casual, Professional, Trendy, and Minimal options
+🎨 **5 Caption Styles** - Casual, Professional, Trendy, Aesthetic, and Minimal options
+🌸 **Aesthetic Captions** - Dreamy, poetic, artistic captions for creative content
+😍 **Emoji Integration** - Emojis naturally woven into text + separate emoji-only versions
 🔍 **Smart Hashtags** - AI-generated relevant hashtags for better reach
 🚀 **Google Gemini AI** - Advanced vision AI for contextual understanding
 📋 **Copy-Ready** - One-click copying with proper formatting
@@ -60,8 +62,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 1. **Choose Content Type**: Select Post, Story, or Reel for optimized captions
 2. **Upload an Image**: Drag and drop or click to select from your device
 3. **Wait for AI Magic**: Gemini analyzes your image (usually 3-10 seconds)
-4. **Get 4 Caption Styles**: Choose from Casual, Professional, Trendy, or Minimal
-5. **Copy & Post**: Click any caption to copy with hashtags included!
+4. **Get 5 Caption Styles**: Casual, Professional, Trendy, Aesthetic, and Minimal
+5. **Copy Text or Emojis**: Choose text captions (with emojis) or emoji-only versions
+6. **Post to Instagram**: Paste directly to Instagram with hashtags included!
 
 ### Supported Image Formats
 
@@ -78,18 +81,27 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Instagram Content Types
 
 **Posts** - Engaging feed content with hashtags (50-150 chars)
-**Stories** - Quick, casual overlay text (20-50 chars)
-**Reels** - Hook-driven, viral-worthy captions with CTAs
+**Stories** - Quick, casual overlay text (15-40 chars)
+**Reels** - Hook-driven, viral-worthy captions with CTAs (80-200 chars)
+
+### 5 Caption Styles
+
+😎 **Casual** - Fun, relatable, conversational with natural emojis
+💼 **Professional** - Polished, brand-friendly, informative with subtle emojis
+🔥 **Trendy** - Current slang, viral phrases, Gen-Z style with trendy emojis
+🌸 **Aesthetic** - Dreamy, poetic, artistic language with aesthetic emojis
+✨ **Minimal** - Clean, simple, impactful with minimal emojis
 
 ### AI Caption Generation
 
 The app uses **Google Gemini 1.5 Flash** with vision capabilities to:
 
 1. **Analyze Image Content** - Understands objects, scenes, emotions, and context
-2. **Generate Multiple Styles** - Creates 4 different caption approaches
-3. **Add Smart Hashtags** - Suggests relevant, trending hashtags
-4. **Include Emojis** - Naturally integrates emojis for engagement
-5. **Optimize for Platform** - Tailored for each Instagram content type
+2. **Generate 5 Style Variations** - Creates diverse caption approaches for each image
+3. **Natural Emoji Integration** - Weaves emojis seamlessly into text captions
+4. **Emoji-Only Versions** - Provides separate emoji-only captions for versatility
+5. **Smart Hashtag Suggestions** - Relevant, trending hashtags for better reach
+6. **Platform Optimization** - Tailored for each Instagram content type
 
 ## Project Structure
 

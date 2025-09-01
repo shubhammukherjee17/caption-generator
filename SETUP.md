@@ -29,8 +29,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser!
 1. **Choose content type**: Select Post, Story, or Reel
 2. **Upload an image** by dragging and dropping or clicking the upload area
 3. **Wait 3-10 seconds** for AI processing
-4. **Get 4 caption styles**: Casual, Professional, Trendy, and Minimal
-5. **Copy & use**: Click any caption to copy with hashtags included!
+4. **Get 5 caption styles**: Casual, Professional, Trendy, Aesthetic, and Minimal
+5. **Choose format**: Copy text captions (with emojis) or emoji-only versions
+6. **Copy & post**: Paste directly to Instagram with hashtags included!
 
 ## ⚠️ Important Notes
 
@@ -39,6 +40,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser!
 - **File Limits**: Maximum 10MB per image
 - **Supported Formats**: JPG, PNG, GIF, WebP, BMP
 - **Content Types**: Each type generates different caption styles
+- **Aesthetic Style**: New dreamy, artistic caption option
+- **Emoji Versions**: Get both text + emoji-only captions
 
 ## 🛠️ Troubleshooting
 

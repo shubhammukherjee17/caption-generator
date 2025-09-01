@@ -6,10 +6,11 @@ import { Copy, Check, Hash, Heart, MessageCircle, Share, Bookmark } from 'lucide
 type InstagramContentType = 'post' | 'story' | 'reel';
 
 interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal';
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic';
   text: string;
   hashtags: string[];
   emojis: string;
+  emojiOnly: string;
 }
 
 interface CaptionResult {
@@ -30,7 +31,8 @@ const captionTypeInfo = {
   casual: { label: '😎 Casual', color: 'blue', desc: 'Fun & relatable' },
   professional: { label: '💼 Professional', color: 'green', desc: 'Polished & informative' },
   trendy: { label: '🔥 Trendy', color: 'purple', desc: 'Current & viral-worthy' },
-  minimal: { label: '✨ Minimal', color: 'gray', desc: 'Clean & aesthetic' }
+  aesthetic: { label: '🌸 Aesthetic', color: 'pink', desc: 'Dreamy & artistic' },
+  minimal: { label: '✨ Minimal', color: 'gray', desc: 'Clean & simple' }
 };
 
 export default function CaptionDisplay({ result }: CaptionDisplayProps) {
@@ -66,7 +68,7 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
           Your Instagram {result.contentType.charAt(0).toUpperCase() + result.contentType.slice(1)} Captions
         </h2>
         <p className="text-gray-600">
-          Choose from 4 different styles - click to copy any caption
+          Choose from 5 different styles - click to copy any caption or emoji version
         </p>
       </div>
 
@@ -87,26 +89,49 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
                     <h3 className="font-semibold text-gray-800">{typeInfo.label}</h3>
                     <p className="text-sm text-gray-600">{typeInfo.desc}</p>
                   </div>
-                  <button
-                    onClick={() => copyToClipboard(fullCaption, captionId)}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
-                      isCopied 
-                        ? 'bg-green-100 text-green-700' 
-                        : `bg-${typeInfo.color}-100 hover:bg-${typeInfo.color}-200 text-${typeInfo.color}-700`
-                    }`}
-                  >
-                    {isCopied ? (
-                      <>
-                        <Check className="w-4 h-4" />
-                        <span className="text-sm font-medium">Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-4 h-4" />
-                        <span className="text-sm font-medium">Copy</span>
-                      </>
-                    )}
-                  </button>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => copyToClipboard(caption.emojiOnly, `${captionId}-emoji`)}
+                      className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all ${
+                        copiedStates[`${captionId}-emoji`]
+                          ? 'bg-green-100 text-green-700' 
+                          : `bg-yellow-100 hover:bg-yellow-200 text-yellow-700`
+                      }`}
+                      title="Copy emoji-only version"
+                    >
+                      {copiedStates[`${captionId}-emoji`] ? (
+                        <>
+                          <Check className="w-4 h-4" />
+                          <span className="text-xs font-medium">✨</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-sm">😍</span>
+                          <span className="text-xs font-medium">Emoji</span>
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => copyToClipboard(fullCaption, captionId)}
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                        isCopied 
+                          ? 'bg-green-100 text-green-700' 
+                          : `bg-${typeInfo.color}-100 hover:bg-${typeInfo.color}-200 text-${typeInfo.color}-700`
+                      }`}
+                    >
+                      {isCopied ? (
+                        <>
+                          <Check className="w-4 h-4" />
+                          <span className="text-sm font-medium">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4" />
+                          <span className="text-sm font-medium">Copy Text</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -155,6 +180,24 @@ export default function CaptionDisplay({ result }: CaptionDisplayProps) {
                     <Bookmark className="w-5 h-5 text-gray-400" />
                   </div>
                 </div>
+                
+                {/* Emoji Only Display */}
+                {caption.emojiOnly && (
+                  <div className="bg-yellow-50 rounded-lg p-3 mb-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-yellow-800">Emoji Only Version:</span>
+                      <button
+                        onClick={() => copyToClipboard(caption.emojiOnly, `${captionId}-emoji-display`)}
+                        className="text-xs px-2 py-1 bg-yellow-200 hover:bg-yellow-300 rounded text-yellow-800"
+                      >
+                        {copiedStates[`${captionId}-emoji-display`] ? '✓ Copied' : 'Copy'}
+                      </button>
+                    </div>
+                    <div className="text-2xl text-center py-2">
+                      {caption.emojiOnly}
+                    </div>
+                  </div>
+                )}
                 
                 {/* Stats */}
                 <div className="flex justify-between text-sm text-gray-500">

@@ -8,10 +8,11 @@ import { Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 type InstagramContentType = 'post' | 'story' | 'reel';
 
 interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal';
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic';
   text: string;
   hashtags: string[];
   emojis: string;
+  emojiOnly: string;
 }
 
 interface CaptionResult {

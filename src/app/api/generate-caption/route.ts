@@ -140,35 +140,87 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
 }
 
 export async function POST(request: NextRequest) {
+  console.log('📸 Caption generation request started');
+  
   try {
+    // Check if API key is available
+    if (!process.env.GEMINI_API_KEY) {
+      console.error('❌ GEMINI_API_KEY environment variable is not set');
+      return NextResponse.json(
+        { error: 'API configuration error. Please check environment variables.' },
+        { status: 500 }
+      );
+    }
+
+    console.log('✅ Environment variables validated');
+    
     const formData = await request.formData();
     const file = formData.get('image') as File;
     const contentType = (formData.get('contentType') as InstagramContentType) || 'post';
     
     if (!file) {
+      console.error('❌ No image file provided');
       return NextResponse.json(
         { error: 'No image file provided' },
         { status: 400 }
       );
     }
 
-    // Convert file to buffer and process with sharp
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    console.log(`✅ Image file received: ${file.name} (${file.size} bytes, ${file.type})`);
+    console.log(`✅ Content type: ${contentType}`);
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
+    if (!allowedTypes.includes(file.type)) {
+      console.error(`❌ Unsupported file type: ${file.type}`);
+      return NextResponse.json(
+        { error: `Unsupported file type: ${file.type}. Please use JPEG, PNG, GIF, WebP, or BMP.` },
+        { status: 400 }
+      );
+    }
+
+    // Validate file size (10MB limit)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      console.error(`❌ File too large: ${file.size} bytes (max: ${maxSize} bytes)`);
+      return NextResponse.json(
+        { error: 'File size too large. Maximum size is 10MB.' },
+        { status: 400 }
+      );
+    }
+
+    console.log('⚙️ Processing image with Sharp...');
     
-    // Process image for Gemini (optimize size but maintain quality)
-    const processedImage = await sharp(buffer)
-      .resize(1024, 1024, { fit: 'inside', withoutEnlargement: true })
-      .jpeg({ quality: 85 })
-      .toBuffer();
+    // Convert file to buffer and process with sharp
+    let bytes, buffer, processedImage;
+    try {
+      bytes = await file.arrayBuffer();
+      buffer = Buffer.from(bytes);
+      
+      // Process image for Gemini (optimize size but maintain quality)
+      processedImage = await sharp(buffer)
+        .resize(1024, 1024, { fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 85 })
+        .toBuffer();
+        
+      console.log(`✅ Image processed successfully (${processedImage.length} bytes)`);
+    } catch (sharpError) {
+      console.error('❌ Sharp processing error:', sharpError);
+      return NextResponse.json(
+        { error: 'Failed to process image. Please try with a different image format.' },
+        { status: 500 }
+      );
+    }
 
     let captions: InstagramCaption[] = [];
     
+    console.log('🤖 Calling Gemini API...');
     try {
       // Use Gemini Vision API
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
       
       const prompt = generateInstagramPrompt(contentType);
+      console.log(`✅ Prompt generated for ${contentType}`);
       
       const imageParts = [
         {
@@ -179,9 +231,13 @@ export async function POST(request: NextRequest) {
         },
       ];
 
+      console.log('📤 Sending request to Gemini...');
       const result = await model.generateContent([prompt, ...imageParts]);
       const response = await result.response;
       const text = response.text();
+      
+      console.log('📥 Received response from Gemini');
+      console.log(`Response length: ${text.length} characters`);
       
       // Parse the JSON response (handle markdown code blocks)
       try {
@@ -196,19 +252,37 @@ export async function POST(request: NextRequest) {
         
         const parsed = JSON.parse(cleanedText);
         captions = parsed.captions || [];
+        console.log(`✅ Successfully parsed ${captions.length} captions`);
+        
+        // Validate captions structure
+        if (!Array.isArray(captions) || captions.length === 0) {
+          console.warn('⚠️ Invalid captions structure, using fallback');
+          captions = generateFallbackCaptions(contentType);
+        }
+        
       } catch (parseError) {
-        console.error('Failed to parse Gemini response:', parseError);
-        console.log('Raw response:', text);
+        console.error('❌ Failed to parse Gemini response:', parseError);
+        console.log('Raw response snippet:', text.substring(0, 500));
         // Fallback captions
         captions = generateFallbackCaptions(contentType);
+        console.log('✅ Using fallback captions');
       }
       
-    } catch (geminiError) {
-      console.error('Gemini API error:', geminiError);
+    } catch (geminiError: any) {
+      console.error('❌ Gemini API error:', geminiError);
+      console.error('Error details:', {
+        message: geminiError?.message,
+        status: geminiError?.status,
+        code: geminiError?.code
+      });
+      
       // Generate fallback captions
       captions = generateFallbackCaptions(contentType);
+      console.log('✅ Using fallback captions due to Gemini error');
     }
 
+    console.log(`🎉 Successfully completed caption generation with ${captions.length} captions`);
+    
     return NextResponse.json({
       captions,
       contentType,
@@ -219,12 +293,26 @@ export async function POST(request: NextRequest) {
       }
     });
 
-  } catch (error) {
-    console.error('Caption generation error:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate caption' },
-      { status: 500 }
-    );
+  } catch (error: any) {
+    console.error('🚫 Caption generation error:', error);
+    console.error('Error details:', {
+      message: error?.message,
+      stack: error?.stack?.substring(0, 500)
+    });
+    
+    // Always return fallback captions instead of an error
+    const fallbackCaptions = generateFallbackCaptions('post');
+    console.log(`⚙️ Returning ${fallbackCaptions.length} fallback captions due to error`);
+    
+    return NextResponse.json({
+      captions: fallbackCaptions,
+      contentType: 'post',
+      imageInfo: {
+        size: 0,
+        type: 'fallback',
+        name: 'fallback-captions'
+      }
+    });
   }
 }
 

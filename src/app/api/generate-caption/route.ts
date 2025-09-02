@@ -20,13 +20,16 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
   
   First, identify:
   - Main subject/content (person, object, scene, etc.)
-  - Mood/vibe (aesthetic, sexy/hot, cute, bold, romantic, cool, artsy, etc.)
+  - Mood/vibe (aesthetic, sexy/hot, cute, bold, romantic, cool, artsy, devotional/spiritual, etc.)
   - Colors, lighting, composition
   - Setting/location
   - Any emotions or feelings conveyed
-  - Style (glamorous, casual, artistic, fitness, fashion, etc.)
+  - Style (glamorous, casual, artistic, fitness, fashion, devotional/spiritual, etc.)
+  - DEVOTIONAL CONTENT: Check if image contains gods, goddesses, temples, spiritual symbols, religious ceremonies, prayers, meditation, or any spiritual/devotional content
   
-  Then adapt ALL captions to match the SPECIFIC content, mood, and energy of THIS image.`;
+  Then adapt ALL captions to match the SPECIFIC content, mood, and energy of THIS image.
+  
+  SPECIAL RULE FOR DEVOTIONAL IMAGES: If the image contains ANY devotional/spiritual content (gods, goddesses, temples, spiritual symbols, religious ceremonies, etc.), include beautiful Hindi shloks (verses) with English translations that relate to the spiritual theme shown in the image.`;
   
   switch (contentType) {
     case 'post':
@@ -51,7 +54,8 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
       - If image is romantic/couple -> use love, relationship, romantic language
       - If image is fashion/style -> use trendy, stylish, fashion-forward language
       - If image is nature/travel -> use adventure, wanderlust, peaceful language
-      - Match the ENERGY: high-energy images need exciting captions, calm images need peaceful captions
+      - If image is DEVOTIONAL/SPIRITUAL (gods, goddesses, temples, spiritual symbols, prayers, meditation, religious ceremonies) -> include beautiful Hindi shloks with English translations that relate to the spiritual content. Use peaceful, reverent, blessed language with spiritual emojis (🙏🕉️🪔✨🌺)
+      - Match the ENERGY: high-energy images need exciting captions, calm images need peaceful captions, devotional images need sacred, respectful captions
       
       For emojis:
       - Use emojis that DIRECTLY relate to what's in the image
@@ -61,6 +65,13 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
       Hashtags:
       - Use hashtags that match the actual image content and mood
       - Include trending tags for the specific niche/category shown
+      - For devotional content, use spiritual hashtags like: #blessed, #spiritual, #devotion, #divine, #prayer, #faith, #peace, #meditation, #god, #temple
+      
+      EXAMPLE HINDI SHLOKS FOR DEVOTIONAL CONTENT:
+      "सर्वे भवन्तु सुखिनः सर्वे सन्तु निरामयाः" (May all be happy, may all be free from illness)
+      "वसुधैव कुटुम्बकम्" (The world is one family)
+      "सत्यमेव जयते" (Truth alone triumphs)
+      "शांति शांति शांतिः" (Peace, peace, peace)
       
       Return in JSON format:
       {
@@ -371,13 +382,13 @@ function generateFallbackCaptions(contentType: InstagramContentType): InstagramC
       emojis: '👑🔥⚡',
       emojiOnly: '👑🔥⚡💪💋💫'
     },
-    // 7. Poetic
+    // 7. Poetic (with devotional alternative)
     {
       type: 'poetic' as const,
-      text: "Like stardust dancing through twilight skies, some moments are simply meant to be captured 🌙✨",
-      hashtags: ['poetic', 'artistic', 'lyrical', 'beauty'],
-      emojis: '🌙✨🌌',
-      emojiOnly: '🌙✨🌌🦋💫🌸'
+      text: "सर्वे भवन्तु सुखिनः सर्वे सन्तु निरामयाः 🙏✨\nMay all beings be happy, may all be free from illness. Finding peace in divine blessings.",
+      hashtags: ['blessed', 'spiritual', 'peace', 'devotion', 'divine'],
+      emojis: '🙏✨🪔',
+      emojiOnly: '🙏✨🪔🕉️🌺💫'
     },
     // 8. One Line
     {

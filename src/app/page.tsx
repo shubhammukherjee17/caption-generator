@@ -5,11 +5,14 @@ import { Instagram } from 'lucide-react';
 import ImageUploader from '@/components/ImageUploader';
 import CaptionDisplay from '@/components/CaptionDisplay';
 import ContentTypeSelector from '@/components/ContentTypeSelector';
+import DarkModeToggle from '@/components/DarkModeToggle';
 
-type InstagramContentType = 'post' | 'story' | 'reel';
+type ContentType = 'instagram-post' | 'instagram-story' | 'instagram-reel' | 'linkedin-post' | 'twitter-thread' | 'facebook-post' | 'youtube-description' | 'tiktok-caption';
 
-interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword';
+interface Caption {
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword' | 
+        'romantic' | 'funny' | 'motivational' | 'lifestyle' | 'travel' | 'food' | 'fitness' | 'business' | 
+        'educational' | 'storytelling' | 'sarcastic' | 'emotional' | 'philosophical' | 'mysterious' | 'confident';
   text: string;
   hashtags: string[];
   emojis: string;
@@ -17,8 +20,8 @@ interface InstagramCaption {
 }
 
 interface CaptionResult {
-  captions: InstagramCaption[];
-  contentType: InstagramContentType;
+  captions: Caption[];
+  contentType: ContentType;
   imageInfo: {
     size: number;
     type: string;
@@ -28,13 +31,13 @@ interface CaptionResult {
 
 export default function Home() {
   const [captionResult, setCaptionResult] = useState<CaptionResult | null>(null);
-  const [selectedContentType, setSelectedContentType] = useState<InstagramContentType>('post');
+  const [selectedContentType, setSelectedContentType] = useState<ContentType>('instagram-post');
 
   const handleCaptionGenerated = (result: CaptionResult) => {
     setCaptionResult(result);
   };
 
-  const handleContentTypeChange = (type: InstagramContentType) => {
+  const handleContentTypeChange = (type: ContentType) => {
     setSelectedContentType(type);
     setCaptionResult(null); // Clear previous results when type changes
   };
@@ -69,9 +72,10 @@ export default function Home() {
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                 <Instagram className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">Instagram Caption Generator</span>
+              <span className="text-xl font-bold text-gray-900">AI Content Caption Generator</span>
             </div>
-            <nav className="hidden md:flex items-center">
+            <nav className="hidden md:flex items-center space-x-4">
+              <DarkModeToggle />
               <button 
                 onClick={scrollToGenerator}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
@@ -90,13 +94,13 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Generate Professional
               <br />
-              <span className="text-blue-600">Instagram Captions</span>
+              <span className="text-blue-600">Social Media Captions</span>
               <br />
-              for Everything
+              for Every Platform
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Create custom Instagram captions for your posts, stories, and reels with our AI-powered platform. 
-              Fast, flexible, and future-ready for content creators and businesses.
+              Create engaging captions for Instagram, LinkedIn, Twitter, YouTube, TikTok and more with our AI-powered platform. 
+              Supporting 25+ caption styles from casual to business - fast, flexible, and future-ready.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <button 
@@ -124,8 +128,8 @@ export default function Home() {
               All Free Tools
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Create engaging Instagram content with our AI-powered caption generator. 
-              No signups, no fees - just upload and generate!
+              Create engaging content for all social media platforms with our AI-powered caption generator. 
+              Support for Instagram, LinkedIn, Twitter, YouTube, TikTok and more. No signups, no fees - just upload and generate!
             </p>
           </div>
           
@@ -144,9 +148,14 @@ export default function Home() {
             {/* Left Column - Upload */}
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                {selectedContentType === 'post' && 'Instagram Post Caption Generator'}
-                {selectedContentType === 'story' && 'Instagram Story Caption Generator'}
-                {selectedContentType === 'reel' && 'Instagram Reel Caption Generator'}
+                {selectedContentType === 'instagram-post' && 'Instagram Post Caption Generator'}
+                {selectedContentType === 'instagram-story' && 'Instagram Story Caption Generator'}
+                {selectedContentType === 'instagram-reel' && 'Instagram Reel Caption Generator'}
+                {selectedContentType === 'linkedin-post' && 'LinkedIn Post Caption Generator'}
+                {selectedContentType === 'twitter-thread' && 'Twitter Thread Caption Generator'}
+                {selectedContentType === 'facebook-post' && 'Facebook Post Caption Generator'}
+                {selectedContentType === 'youtube-description' && 'YouTube Description Generator'}
+                {selectedContentType === 'tiktok-caption' && 'TikTok Caption Generator'}
               </h3>
               <ImageUploader 
                 onCaptionGenerated={handleCaptionGenerated}

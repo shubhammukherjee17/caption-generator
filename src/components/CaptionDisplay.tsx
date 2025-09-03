@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { Instagram } from 'lucide-react';
 
-type InstagramContentType = 'post' | 'story' | 'reel';
+type ContentType = 'instagram-post' | 'instagram-story' | 'instagram-reel' | 'linkedin-post' | 'twitter-thread' | 'facebook-post' | 'youtube-description' | 'tiktok-caption';
 
-interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword';
+interface Caption {
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword' | 
+        'romantic' | 'funny' | 'motivational' | 'lifestyle' | 'travel' | 'food' | 'fitness' | 'business' | 
+        'educational' | 'storytelling' | 'sarcastic' | 'emotional' | 'philosophical' | 'mysterious' | 'confident';
   text: string;
   hashtags: string[];
   emojis: string;
@@ -14,8 +16,8 @@ interface InstagramCaption {
 }
 
 interface CaptionResult {
-  captions: InstagramCaption[];
-  contentType: InstagramContentType;
+  captions: Caption[];
+  contentType: ContentType;
   imageInfo: {
     size: number;
     type: string;
@@ -28,15 +30,33 @@ interface CaptionDisplayProps {
 }
 
 const captionTypeInfo = {
-  casual: { label: '😎 Casual', color: 'blue', desc: 'Fun & relatable' },
-  professional: { label: '💼 Professional', color: 'green', desc: 'Polished & informative' },
-  trendy: { label: '🔥 Trendy', color: 'purple', desc: 'Current & viral-worthy' },
-  aesthetic: { label: '🌸 Aesthetic', color: 'pink', desc: 'Dreamy & artistic' },
-  minimal: { label: '✨ Minimal', color: 'gray', desc: 'Clean & simple' },
-  bold: { label: '👑 Bold', color: 'red', desc: 'Confident & powerful' },
-  poetic: { label: '🌙 Poetic', color: 'indigo', desc: 'Lyrical & artistic' },
-  oneline: { label: '📝 One Line', color: 'teal', desc: 'Single impactful sentence' },
-  oneword: { label: '💎 One Word', color: 'orange', desc: 'Powerful single word' }
+  // Original types
+  casual: { label: '😎 Casual', color: 'blue', desc: 'Fun & relatable', gradient: 'from-blue-500 to-blue-600' },
+  professional: { label: '💼 Professional', color: 'green', desc: 'Polished & informative', gradient: 'from-green-500 to-green-600' },
+  trendy: { label: '🔥 Trendy', color: 'purple', desc: 'Current & viral-worthy', gradient: 'from-purple-500 to-purple-600' },
+  aesthetic: { label: '🌸 Aesthetic', color: 'pink', desc: 'Dreamy & artistic', gradient: 'from-pink-500 to-pink-600' },
+  minimal: { label: '✨ Minimal', color: 'gray', desc: 'Clean & simple', gradient: 'from-gray-500 to-gray-600' },
+  bold: { label: '👑 Bold', color: 'red', desc: 'Confident & powerful', gradient: 'from-red-500 to-red-600' },
+  poetic: { label: '🌙 Poetic', color: 'indigo', desc: 'Lyrical & artistic', gradient: 'from-indigo-500 to-indigo-600' },
+  oneline: { label: '📝 One Line', color: 'teal', desc: 'Single impactful sentence', gradient: 'from-teal-500 to-teal-600' },
+  oneword: { label: '💎 One Word', color: 'orange', desc: 'Powerful single word', gradient: 'from-orange-500 to-orange-600' },
+  
+  // New expanded types
+  romantic: { label: '💕 Romantic', color: 'rose', desc: 'Love & relationships', gradient: 'from-rose-500 to-rose-600' },
+  funny: { label: '😂 Funny', color: 'yellow', desc: 'Humorous & entertaining', gradient: 'from-yellow-500 to-yellow-600' },
+  motivational: { label: '💪 Motivational', color: 'emerald', desc: 'Inspiring & uplifting', gradient: 'from-emerald-500 to-emerald-600' },
+  lifestyle: { label: '🌿 Lifestyle', color: 'green', desc: 'Daily life & wellness', gradient: 'from-green-500 to-emerald-500' },
+  travel: { label: '✈️ Travel', color: 'sky', desc: 'Adventure & wanderlust', gradient: 'from-sky-500 to-sky-600' },
+  food: { label: '🍽️ Food', color: 'amber', desc: 'Culinary & delicious', gradient: 'from-amber-500 to-amber-600' },
+  fitness: { label: '🏋️ Fitness', color: 'orange', desc: 'Health & strength', gradient: 'from-orange-500 to-red-500' },
+  business: { label: '📊 Business', color: 'slate', desc: 'Corporate & growth', gradient: 'from-slate-500 to-slate-600' },
+  educational: { label: '📚 Educational', color: 'blue', desc: 'Learning & insights', gradient: 'from-blue-600 to-indigo-600' },
+  storytelling: { label: '📖 Storytelling', color: 'violet', desc: 'Narrative & engaging', gradient: 'from-violet-500 to-violet-600' },
+  sarcastic: { label: '😏 Sarcastic', color: 'zinc', desc: 'Witty & clever', gradient: 'from-zinc-500 to-zinc-600' },
+  emotional: { label: '💭 Emotional', color: 'purple', desc: 'Deep & heartfelt', gradient: 'from-purple-600 to-purple-700' },
+  philosophical: { label: '🧠 Philosophical', color: 'indigo', desc: 'Thoughtful & profound', gradient: 'from-indigo-600 to-indigo-700' },
+  mysterious: { label: '🌚 Mysterious', color: 'gray', desc: 'Intriguing & enigmatic', gradient: 'from-gray-600 to-gray-700' },
+  confident: { label: '💯 Confident', color: 'red', desc: 'Self-assured & bold', gradient: 'from-red-600 to-red-700' }
 };
 
 export default function CaptionDisplay({ result }: CaptionDisplayProps) {

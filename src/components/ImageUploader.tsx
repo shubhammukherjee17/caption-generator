@@ -4,11 +4,14 @@ import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
+import StoryTemplates from './StoryTemplates';
 
-type InstagramContentType = 'post' | 'story' | 'reel';
+type ContentType = 'instagram-post' | 'instagram-story' | 'instagram-reel' | 'linkedin-post' | 'twitter-thread' | 'facebook-post' | 'youtube-description' | 'tiktok-caption';
 
-interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword';
+interface Caption {
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword' | 
+        'romantic' | 'funny' | 'motivational' | 'lifestyle' | 'travel' | 'food' | 'fitness' | 'business' | 
+        'educational' | 'storytelling' | 'sarcastic' | 'emotional' | 'philosophical' | 'mysterious' | 'confident';
   text: string;
   hashtags: string[];
   emojis: string;
@@ -16,8 +19,8 @@ interface InstagramCaption {
 }
 
 interface CaptionResult {
-  captions: InstagramCaption[];
-  contentType: InstagramContentType;
+  captions: Caption[];
+  contentType: ContentType;
   imageInfo: {
     size: number;
     type: string;
@@ -27,7 +30,7 @@ interface CaptionResult {
 
 interface ImageUploaderProps {
   onCaptionGenerated: (result: CaptionResult) => void;
-  contentType: InstagramContentType;
+  contentType: ContentType;
 }
 
 export default function ImageUploader({ onCaptionGenerated, contentType }: ImageUploaderProps) {
@@ -154,22 +157,24 @@ export default function ImageUploader({ onCaptionGenerated, contentType }: Image
           </div>
         </div>
         
-        {/* Options like QR Builders */}
+        {/* Modern Options Display */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Content Type
+              Platform
             </label>
-            <div className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
-              <span className="text-sm text-gray-900 font-medium capitalize">{contentType}</span>
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg px-3 py-2">
+              <span className="text-sm text-blue-900 font-medium">
+                {contentType.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+              </span>
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Caption Styles
             </label>
-            <div className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
-              <span className="text-sm text-gray-900 font-medium">9 Styles</span>
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg px-3 py-2">
+              <span className="text-sm text-green-900 font-medium">25+ Styles</span>
             </div>
           </div>
         </div>
@@ -178,6 +183,18 @@ export default function ImageUploader({ onCaptionGenerated, contentType }: Image
       {error && (
         <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-600 text-sm">{error}</p>
+        </div>
+      )}
+      
+      {/* Story Templates for Instagram Stories */}
+      {contentType === 'instagram-story' && (
+        <div className="mt-6">
+          <StoryTemplates 
+            onTemplateSelect={(template) => {
+              console.log('Selected template:', template);
+              // Template selected - could integrate with caption generation
+            }} 
+          />
         </div>
       )}
     </div>

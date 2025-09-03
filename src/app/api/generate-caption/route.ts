@@ -5,17 +5,19 @@ import sharp from 'sharp';
 // Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-type InstagramContentType = 'post' | 'story' | 'reel';
+type ContentType = 'instagram-post' | 'instagram-story' | 'instagram-reel' | 'linkedin-post' | 'twitter-thread' | 'facebook-post' | 'youtube-description' | 'tiktok-caption';
 
-interface InstagramCaption {
-  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword';
+interface Caption {
+  type: 'casual' | 'professional' | 'trendy' | 'minimal' | 'aesthetic' | 'bold' | 'poetic' | 'oneline' | 'oneword' | 
+        'romantic' | 'funny' | 'motivational' | 'lifestyle' | 'travel' | 'food' | 'fitness' | 'business' | 
+        'educational' | 'storytelling' | 'sarcastic' | 'emotional' | 'philosophical' | 'mysterious' | 'confident';
   text: string;
   hashtags: string[];
   emojis: string;
   emojiOnly: string;
 }
 
-function generateInstagramPrompt(contentType: InstagramContentType): string {
+function generateContentPrompt(contentType: ContentType): string {
   const basePrompt = `CRITICAL: Analyze this image DEEPLY and generate Instagram captions based on what you ACTUALLY SEE. 
   
   First, identify:
@@ -32,7 +34,7 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
   SPECIAL RULE FOR DEVOTIONAL IMAGES: If the image contains ANY devotional/spiritual content (gods, goddesses, temples, spiritual symbols, religious ceremonies, etc.), include beautiful Hindi shloks (verses) with English translations that relate to the spiritual theme shown in the image.`;
   
   switch (contentType) {
-    case 'post':
+    case 'instagram-post':
       return `${basePrompt}
       
       Create 9 Instagram POST captions that PERFECTLY match this specific image:
@@ -86,7 +88,7 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
         ]
       }`;
       
-    case 'story':
+    case 'instagram-story':
       return `${basePrompt}
       
       Create 5 Instagram STORY captions that capture the EXACT mood of this image:
@@ -116,7 +118,7 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
         ]
       }`;
       
-    case 'reel':
+    case 'instagram-reel':
       return `${basePrompt}
       
       Create 5 Instagram REEL captions with STRONG hooks matching this specific image:
@@ -147,6 +149,129 @@ function generateInstagramPrompt(contentType: InstagramContentType): string {
           }
         ]
       }`;
+
+    // New platform-specific prompts
+    case 'linkedin-post':
+      return `${basePrompt}
+      
+      Create 8 LinkedIn POST captions with professional focus:
+      
+      1. PROFESSIONAL - Executive-level, industry insights, thought leadership
+      2. BUSINESS - Corporate growth, strategy, innovation, market trends
+      3. MOTIVATIONAL - Career inspiration, professional development, success mindset
+      4. EDUCATIONAL - Industry knowledge, skills development, learning insights
+      5. LIFESTYLE - Work-life balance, professional lifestyle, networking
+      6. STORYTELLING - Career journey, business stories, lessons learned
+      7. CONFIDENT - Professional confidence, leadership presence, expertise
+      8. ONELINE - Professional one-liner that captures business essence
+      
+      LinkedIn Rules:
+      - Professional tone throughout
+      - Focus on business value and insights
+      - Use business-appropriate hashtags
+      - Include calls for professional engagement
+      - Target career-minded audience
+      
+      Return in JSON format with LinkedIn-appropriate content.`;
+
+    case 'twitter-thread':
+      return `${basePrompt}
+      
+      Create 6 Twitter THREAD starter captions:
+      
+      1. CASUAL - Conversational thread starter with personality
+      2. TRENDY - Current topics, viral potential, zeitgeist
+      3. EDUCATIONAL - Informative threads, how-to, insights
+      4. FUNNY - Humorous takes, memes, entertaining content
+      5. EMOTIONAL - Personal stories, relatable experiences
+      6. BUSINESS - Industry insights, professional takes
+      
+      Twitter Rules:
+      - Hook must grab attention immediately
+      - Consider thread format (1/n structure)
+      - Use trending hashtags when relevant
+      - Encourage retweets and engagement
+      - Character-efficient but impactful
+      
+      Return in JSON format.`;
+
+    case 'facebook-post':
+      return `${basePrompt}
+      
+      Create 6 Facebook POST captions for community engagement:
+      
+      1. CASUAL - Friendly, community-focused, conversational
+      2. LIFESTYLE - Daily life, relatable moments, personal sharing
+      3. STORYTELLING - Detailed narratives, personal experiences
+      4. MOTIVATIONAL - Uplifting, inspiring, positive messaging
+      5. FUNNY - Light-hearted, family-friendly humor
+      6. EMOTIONAL - Heartfelt, meaningful, connection-focused
+      
+      Facebook Rules:
+      - Longer format acceptable
+      - Focus on community and relationships
+      - Encourage meaningful comments
+      - Family-friendly content
+      - Build connections and conversations
+      
+      Return in JSON format.`;
+
+    case 'youtube-description':
+      return `${basePrompt}
+      
+      Create 5 YouTube DESCRIPTION captions:
+      
+      1. PROFESSIONAL - Polished video descriptions with value proposition
+      2. EDUCATIONAL - Learning-focused, tutorial-style descriptions
+      3. CASUAL - Conversational, personality-driven descriptions
+      4. BUSINESS - Brand-focused, promotional, strategic
+      5. STORYTELLING - Narrative descriptions that build anticipation
+      
+      YouTube Rules:
+      - SEO-optimized descriptions
+      - Include video value proposition
+      - Encourage subscriptions and engagement
+      - Consider searchability
+      - Call-to-action for video interaction
+      
+      Return in JSON format.`;
+
+    case 'tiktok-caption':
+      return `${basePrompt}
+      
+      Create 6 TikTok CAPTION styles:
+      
+      1. TRENDY - Current trends, viral language, Gen-Z speak
+      2. FUNNY - Humorous, entertaining, meme-worthy
+      3. CASUAL - Relatable, everyday moments, authentic
+      4. CONFIDENT - Bold statements, self-assured content
+      5. MYSTERIOUS - Intriguing, curiosity-driven hooks
+      6. AESTHETIC - Visually-focused, artistic descriptions
+      
+      TikTok Rules:
+      - Match current trends and sounds
+      - Use trending hashtags
+      - Encourage duets and stitches
+      - Appeal to younger demographics
+      - Viral potential language
+      
+      Return in JSON format.`;
+
+    default:
+      return `${basePrompt}
+      
+      Create 9 general social media captions matching this image:
+      1. CASUAL - Relatable and conversational
+      2. PROFESSIONAL - Polished and informative
+      3. TRENDY - Current and viral-worthy
+      4. AESTHETIC - Artistic and dreamy
+      5. MINIMAL - Clean and simple
+      6. BOLD - Confident and powerful
+      7. MOTIVATIONAL - Inspiring and uplifting
+      8. FUNNY - Humorous and entertaining
+      9. EMOTIONAL - Heartfelt and meaningful
+      
+      Return in JSON format.`;
   }
 }
 
@@ -167,7 +292,7 @@ export async function POST(request: NextRequest) {
     
     const formData = await request.formData();
     const file = formData.get('image') as File;
-    const contentType = (formData.get('contentType') as InstagramContentType) || 'post';
+    const contentType = (formData.get('contentType') as ContentType) || 'instagram-post';
     
     if (!file) {
       console.error('❌ No image file provided');
@@ -223,14 +348,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let captions: InstagramCaption[] = [];
+    let captions: Caption[] = [];
     
     console.log('🤖 Calling Gemini API...');
     try {
       // Use Gemini Vision API
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
       
-      const prompt = generateInstagramPrompt(contentType);
+      const prompt = generateContentPrompt(contentType);
       console.log(`✅ Prompt generated for ${contentType}`);
       
       const imageParts = [
@@ -316,12 +441,12 @@ export async function POST(request: NextRequest) {
     console.error('Error details:', errorDetails);
     
     // Always return fallback captions instead of an error
-    const fallbackCaptions = generateFallbackCaptions('post');
+    const fallbackCaptions = generateFallbackCaptions('instagram-post');
     console.log(`⚙️ Returning ${fallbackCaptions.length} fallback captions due to error`);
     
     return NextResponse.json({
       captions: fallbackCaptions,
-      contentType: 'post',
+      contentType: 'instagram-post',
       imageInfo: {
         size: 0,
         type: 'fallback',
@@ -331,7 +456,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function generateFallbackCaptions(contentType: InstagramContentType): InstagramCaption[] {
+function generateFallbackCaptions(contentType: ContentType): Caption[] {
   // Comprehensive fallback captions covering all 9 caption types
   const expandedCaptions = [
     // 1. Casual
@@ -409,8 +534,8 @@ function generateFallbackCaptions(contentType: InstagramContentType): InstagramC
   ];
   
   const fallbacks = {
-    post: expandedCaptions,
-    story: [
+    'instagram-post': expandedCaptions,
+    'instagram-story': [
       {
         type: 'casual' as const,
         text: "Feeling myself 🔥",
@@ -447,7 +572,7 @@ function generateFallbackCaptions(contentType: InstagramContentType): InstagramC
         emojiOnly: '✨😍'
       }
     ],
-    reel: [
+    'instagram-reel': [
       {
         type: 'casual' as const,
         text: "Wait... did I just serve this look? 🔥👀 Double tap if you agree!",
@@ -483,8 +608,60 @@ function generateFallbackCaptions(contentType: InstagramContentType): InstagramC
         emojis: '💪✨',
         emojiOnly: '💪✨🔥'
       }
+    ],
+    'linkedin-post': [
+      {
+        type: 'professional' as const,
+        text: "Driving innovation through strategic thinking and collaborative leadership 💼🚀",
+        hashtags: ['leadership', 'innovation', 'strategy', 'professional'],
+        emojis: '💼🚀💡',
+        emojiOnly: '💼🚀💡🎯✨'
+      },
+      {
+        type: 'business' as const,
+        text: "Market trends show the future belongs to adaptive organizations. What's your strategy?",
+        hashtags: ['business', 'strategy', 'growth', 'leadership'],
+        emojis: '📊📈💼',
+        emojiOnly: '📊📈💼🎯🚀'
+      }
+    ],
+    'twitter-thread': [
+      {
+        type: 'casual' as const,
+        text: "Thread 🧵 Here's what I learned today that changed everything...",
+        hashtags: ['thread', 'learning', 'insights', 'growth'],
+        emojis: '🧵💡✨',
+        emojiOnly: '🧵💡✨📚🔥'
+      }
+    ],
+    'facebook-post': [
+      {
+        type: 'casual' as const,
+        text: "Life's beautiful moments deserve to be shared with the people who matter most ❤️",
+        hashtags: ['life', 'family', 'memories', 'gratitude'],
+        emojis: '❤️🏠✨',
+        emojiOnly: '❤️🏠✨😊💕'
+      }
+    ],
+    'youtube-description': [
+      {
+        type: 'professional' as const,
+        text: "In today's video, we explore [topic] with actionable insights you can apply immediately. Don't forget to subscribe for more content!",
+        hashtags: ['youtube', 'tutorial', 'learning', 'subscribe'],
+        emojis: '▶️📚💡',
+        emojiOnly: '▶️📚💡🎯✨'
+      }
+    ],
+    'tiktok-caption': [
+      {
+        type: 'trendy' as const,
+        text: "This trend hits different when you add your own twist ✨ #fyp",
+        hashtags: ['fyp', 'trend', 'viral', 'creative'],
+        emojis: '✨🔥💫',
+        emojiOnly: '✨🔥💫🎵💃'
+      }
     ]
   };
   
-  return fallbacks[contentType] || fallbacks.post;
+  return fallbacks[contentType] || fallbacks['instagram-post'];
 }

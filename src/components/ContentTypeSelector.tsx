@@ -1,52 +1,103 @@
 'use client';
 
-import { Instagram, Camera, Video } from 'lucide-react';
+import { Instagram, Camera, Video, Linkedin, Twitter, Facebook, Youtube, Music, Briefcase, MessageCircle } from 'lucide-react';
 
-type InstagramContentType = 'post' | 'story' | 'reel';
+type ContentType = 'instagram-post' | 'instagram-story' | 'instagram-reel' | 'linkedin-post' | 'twitter-thread' | 'facebook-post' | 'youtube-description' | 'tiktok-caption';
 
 interface ContentTypeSelectorProps {
-  selectedType: InstagramContentType;
-  onTypeChange: (type: InstagramContentType) => void;
+  selectedType: ContentType;
+  onTypeChange: (type: ContentType) => void;
 }
 
 const contentTypes = [
   {
-    id: 'post' as const,
+    id: 'instagram-post' as const,
     label: 'Instagram Post',
     description: 'Feed posts with engaging captions',
     icon: Instagram,
-    gradient: 'from-blue-500 to-cyan-500',
-    bgGradient: 'from-blue-500/20 to-cyan-500/20',
-    textColor: 'text-blue-200',
-    features: ['9 Caption Styles', '5 Hashtag Types', 'Engagement Focused']
-  },
-  {
-    id: 'story' as const,
-    label: 'Instagram Story',
-    description: 'Quick, casual story content',
-    icon: Camera,
     gradient: 'from-purple-500 to-pink-500',
-    bgGradient: 'from-purple-500/20 to-pink-500/20',
-    textColor: 'text-purple-200',
-    features: ['Short & Sweet', 'Casual Tone', 'Moment Capture']
+    bgGradient: 'from-purple-500/10 to-pink-500/10',
+    borderColor: 'border-purple-200 hover:border-purple-300',
+    features: ['25+ Caption Styles', 'Smart Hashtags', 'Emoji Integration', 'Story Formats']
   },
   {
-    id: 'reel' as const,
+    id: 'instagram-story' as const,
+    label: 'Instagram Story',
+    description: 'Quick, engaging story content',
+    icon: Camera,
+    gradient: 'from-orange-500 to-pink-500',
+    bgGradient: 'from-orange-500/10 to-pink-500/10',
+    borderColor: 'border-orange-200 hover:border-orange-300',
+    features: ['Short & Sweet', 'Interactive Elements', 'Polls & Questions', 'Behind-the-scenes']
+  },
+  {
+    id: 'instagram-reel' as const,
     label: 'Instagram Reel',
     description: 'Viral-ready reel captions',
     icon: Video,
     gradient: 'from-pink-500 to-red-500',
-    bgGradient: 'from-pink-500/20 to-red-500/20',
-    textColor: 'text-pink-200',
-    features: ['Hook-Driven', 'Call-to-Action', 'Viral Potential']
+    bgGradient: 'from-pink-500/10 to-red-500/10',
+    borderColor: 'border-pink-200 hover:border-pink-300',
+    features: ['Hook-Driven', 'Call-to-Action', 'Viral Potential', 'Trending Audio']
+  },
+  {
+    id: 'linkedin-post' as const,
+    label: 'LinkedIn Post',
+    description: 'Professional networking content',
+    icon: Linkedin,
+    gradient: 'from-blue-600 to-blue-700',
+    bgGradient: 'from-blue-600/10 to-blue-700/10',
+    borderColor: 'border-blue-200 hover:border-blue-300',
+    features: ['Professional Tone', 'Industry Insights', 'Career Growth', 'Thought Leadership']
+  },
+  {
+    id: 'twitter-thread' as const,
+    label: 'Twitter Thread',
+    description: 'Engaging Twitter conversations',
+    icon: Twitter,
+    gradient: 'from-blue-400 to-blue-600',
+    bgGradient: 'from-blue-400/10 to-blue-600/10',
+    borderColor: 'border-blue-200 hover:border-blue-300',
+    features: ['Thread Structure', 'Viral Hooks', 'Character Limits', 'Engagement Focus']
+  },
+  {
+    id: 'facebook-post' as const,
+    label: 'Facebook Post',
+    description: 'Community-focused content',
+    icon: Facebook,
+    gradient: 'from-blue-600 to-indigo-600',
+    bgGradient: 'from-blue-600/10 to-indigo-600/10',
+    borderColor: 'border-blue-200 hover:border-blue-300',
+    features: ['Community Building', 'Detailed Stories', 'Event Promotion', 'Group Engagement']
+  },
+  {
+    id: 'youtube-description' as const,
+    label: 'YouTube Description',
+    description: 'Video descriptions & titles',
+    icon: Youtube,
+    gradient: 'from-red-500 to-red-600',
+    bgGradient: 'from-red-500/10 to-red-600/10',
+    borderColor: 'border-red-200 hover:border-red-300',
+    features: ['SEO Optimized', 'Timestamps', 'Call-to-Action', 'Channel Growth']
+  },
+  {
+    id: 'tiktok-caption' as const,
+    label: 'TikTok Caption',
+    description: 'Trendy, viral TikTok content',
+    icon: Music,
+    gradient: 'from-black to-gray-800',
+    bgGradient: 'from-black/10 to-gray-800/10',
+    borderColor: 'border-gray-200 hover:border-gray-300',
+    features: ['Trend-Aware', 'Gen-Z Language', 'Challenge Ready', 'Music Integration']
   }
 ];
 
 export default function ContentTypeSelector({ selectedType, onTypeChange }: ContentTypeSelectorProps) {
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* QR Builders Style Cards */}
-      <div className="grid md:grid-cols-3 gap-8">
+    <div className="max-w-7xl mx-auto">
+      {/* Modern Platform Cards */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Featured platforms first */}
         {contentTypes.map((type) => {
           const Icon = type.icon;
           const isSelected = selectedType === type.id;
